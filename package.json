@@ -18,32 +18,32 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@payloadcms/db-sqlite": "3.68.4",
     "@payloadcms/next": "3.68.4",
     "@payloadcms/richtext-lexical": "3.68.4",
     "@payloadcms/ui": "3.68.4",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
-    "graphql": "^16.8.1",
-    "next": "15.4.10",
+    "graphql": "^16.12.0",
+    "next": "16.0.10",
     "payload": "3.68.4",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
-    "sharp": "0.34.2",
-    "@payloadcms/db-sqlite": "3.68.4"
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "sharp": "0.34.2"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
     "@testing-library/react": "16.3.0",
-    "@types/node": "^22.5.4",
-    "@types/react": "19.2.1",
-    "@types/react-dom": "19.2.1",
+    "@types/node": "^22.19.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "4.5.2",
-    "eslint": "^9.16.0",
-    "eslint-config-next": "15.4.7",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "16.0.10",
     "jsdom": "26.1.0",
     "playwright": "1.56.1",
     "playwright-core": "1.56.1",
-    "prettier": "^3.4.2",
+    "prettier": "^3.7.4",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.3"
@@ -57,6 +57,14 @@
       "sharp",
       "esbuild",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.3"
+    }
+  },
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
   }
 }
