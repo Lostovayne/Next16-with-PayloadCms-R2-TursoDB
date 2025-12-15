@@ -1,8 +1,8 @@
-import { defineConfig } from 'drizzle-kit'
-import dotenv from 'dotenv'
+import { defineConfig } from 'drizzle-kit';
+import dotenv from 'dotenv';
 
 // Carga variables de entorno locales
-dotenv.config()
+dotenv.config();
 
 export default defineConfig({
   schema: './src/collections/*.ts',
@@ -12,4 +12,4 @@ export default defineConfig({
     url: process.env.TURSO_DATABASE_URL!,
     authToken: process.env.TURSO_AUTH_TOKEN!,
   },
-})
+});

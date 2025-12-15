@@ -186,14 +186,14 @@ cross-env NODE_OPTIONS=--no-deprecation payload generate:types
 ```typescript
 // src/payload-types.ts
 export interface User {
-  id: string
-  email: string
+  id: string;
+  email: string;
   // ... más campos
 }
 
 export interface Media {
-  id: string
-  filename: string
+  id: string;
+  filename: string;
   // ... más campos
 }
 ```

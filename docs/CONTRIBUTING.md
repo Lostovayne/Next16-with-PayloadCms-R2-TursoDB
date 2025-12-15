@@ -163,16 +163,16 @@ git push origin feature/nueva-funcionalidad
 
 ```typescript
 // ❌ Evitar
-const data: any = fetchData()
+const data: any = fetchData();
 
 // ✅ Correcto
 interface UserData {
-  id: string
-  email: string
-  name: string
+  id: string;
+  email: string;
+  name: string;
 }
 
-const data: UserData = fetchData()
+const data: UserData = fetchData();
 ```
 
 ### ESLint y Prettier
@@ -196,22 +196,22 @@ npx prettier --write .
 
 ```typescript
 // 1. Imports
-import { CollectionConfig } from 'payload'
-import { slugify } from '../lib/utils'
+import { CollectionConfig } from 'payload';
+import { slugify } from '../lib/utils';
 
 // 2. Tipos/Interfaces
 interface CustomField {
-  name: string
-  value: string
+  name: string;
+  value: string;
 }
 
 // 3. Constantes
-const DEFAULT_STATUS = 'draft'
+const DEFAULT_STATUS = 'draft';
 
 // 4. Funciones/Componentes
 export const Posts: CollectionConfig = {
   // ...
-}
+};
 ```
 
 ## 📝 Commits y Pull Requests
@@ -386,13 +386,13 @@ Cualquier otro contexto, screenshots, o ejemplos.
 **Ejemplo de test:**
 
 ```typescript
-import { describe, it, expect } from 'vitest'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
+import { describe, it, expect } from 'vitest';
+import { getPayload } from 'payload';
+import config from '@/payload.config';
 
 describe('Comments Collection', () => {
   it('should create a comment', async () => {
-    const payload = await getPayload({ config })
+    const payload = await getPayload({ config });
 
     const comment = await payload.create({
       collection: 'comments',
@@ -400,11 +400,11 @@ describe('Comments Collection', () => {
         content: 'Test comment',
         post: '123',
       },
-    })
+    });
 
-    expect(comment.content).toBe('Test comment')
-  })
-})
+    expect(comment.content).toBe('Test comment');
+  });
+});
 ```
 
 ### Ejecutar Tests

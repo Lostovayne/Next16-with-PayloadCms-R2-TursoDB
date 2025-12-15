@@ -24,6 +24,7 @@ Guía para crear y configurar las labels necesarias para Dependabot y otras auto
 Click en **"New label"** para cada una de estas:
 
 #### Label 1: dependencies
+
 ```
 Name: dependencies
 Description: Pull requests that update a dependency file
@@ -31,6 +32,7 @@ Color: #0366d6 (azul)
 ```
 
 #### Label 2: automated
+
 ```
 Name: automated
 Description: Automated pull requests
@@ -38,6 +40,7 @@ Color: #7057ff (morado)
 ```
 
 #### Label 3: github-actions
+
 ```
 Name: github-actions
 Description: Pull requests that update GitHub Actions
@@ -45,6 +48,7 @@ Color: #2088ff (azul claro)
 ```
 
 #### Label 4: docker
+
 ```
 Name: docker
 Description: Pull requests that update Docker
@@ -52,6 +56,7 @@ Color: #0db7ed (celeste)
 ```
 
 #### Label 5: needs-review
+
 ```
 Name: needs-review
 Description: This PR requires manual review
@@ -59,6 +64,7 @@ Color: #fbca04 (amarillo)
 ```
 
 #### Label 6: major-update
+
 ```
 Name: major-update
 Description: Major version update (breaking changes possible)
@@ -153,7 +159,7 @@ labels=(
 # Crear cada label
 for label_data in "${labels[@]}"; do
   IFS='|' read -r name description color <<< "$label_data"
-  
+
   echo "Creating label: $name"
   gh label create "$name" \
     --description "$description" \
@@ -190,43 +196,43 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN
+  auth: process.env.GITHUB_TOKEN,
 });
 
 const owner = 'tu-usuario'; // Cambia esto
-const repo = 'tu-repo';      // Cambia esto
+const repo = 'tu-repo'; // Cambia esto
 
 const labels = [
   {
     name: 'dependencies',
     description: 'Pull requests that update a dependency file',
-    color: '0366d6'
+    color: '0366d6',
   },
   {
     name: 'automated',
     description: 'Automated pull requests',
-    color: '7057ff'
+    color: '7057ff',
   },
   {
     name: 'github-actions',
     description: 'Pull requests that update GitHub Actions',
-    color: '2088ff'
+    color: '2088ff',
   },
   {
     name: 'docker',
     description: 'Pull requests that update Docker',
-    color: '0db7ed'
+    color: '0db7ed',
   },
   {
     name: 'needs-review',
     description: 'This PR requires manual review',
-    color: 'fbca04'
+    color: 'fbca04',
   },
   {
     name: 'major-update',
     description: 'Major version update (breaking changes possible)',
-    color: 'd93f0b'
-  }
+    color: 'd93f0b',
+  },
 ];
 
 async function createLabels() {
@@ -239,7 +245,7 @@ async function createLabels() {
         repo,
         name: label.name,
         description: label.description,
-        color: label.color
+        color: label.color,
       });
       console.log(`✅ Created: ${label.name}`);
     } catch (error) {
@@ -276,28 +282,28 @@ node create-labels.js
 
 ### Labels Esenciales (Obligatorias)
 
-| Label | Color | Uso |
-|-------|-------|-----|
+| Label          | Color                                                                     | Uso               |
+| -------------- | ------------------------------------------------------------------------- | ----------------- |
 | `dependencies` | ![#0366d6](https://via.placeholder.com/15/0366d6/000000?text=+) `#0366d6` | PRs de Dependabot |
-| `automated` | ![#7057ff](https://via.placeholder.com/15/7057ff/000000?text=+) `#7057ff` | PRs automáticos |
+| `automated`    | ![#7057ff](https://via.placeholder.com/15/7057ff/000000?text=+) `#7057ff` | PRs automáticos   |
 
 ### Labels Adicionales (Recomendadas)
 
-| Label | Color | Uso |
-|-------|-------|-----|
-| `github-actions` | ![#2088ff](https://via.placeholder.com/15/2088ff/000000?text=+) `#2088ff` | Updates de Actions |
-| `docker` | ![#0db7ed](https://via.placeholder.com/15/0db7ed/000000?text=+) `#0db7ed` | Updates de Docker |
-| `needs-review` | ![#fbca04](https://via.placeholder.com/15/fbca04/000000?text=+) `#fbca04` | Requiere revisión manual |
-| `major-update` | ![#d93f0b](https://via.placeholder.com/15/d93f0b/000000?text=+) `#d93f0b` | Actualizaciones major |
+| Label            | Color                                                                     | Uso                      |
+| ---------------- | ------------------------------------------------------------------------- | ------------------------ |
+| `github-actions` | ![#2088ff](https://via.placeholder.com/15/2088ff/000000?text=+) `#2088ff` | Updates de Actions       |
+| `docker`         | ![#0db7ed](https://via.placeholder.com/15/0db7ed/000000?text=+) `#0db7ed` | Updates de Docker        |
+| `needs-review`   | ![#fbca04](https://via.placeholder.com/15/fbca04/000000?text=+) `#fbca04` | Requiere revisión manual |
+| `major-update`   | ![#d93f0b](https://via.placeholder.com/15/d93f0b/000000?text=+) `#d93f0b` | Actualizaciones major    |
 
 ### Labels Opcionales
 
-| Label | Color | Descripción |
-|-------|-------|-------------|
-| `security` | `#ee0701` | Security updates |
-| `breaking-change` | `#d93f0b` | Breaking changes |
-| `auto-merge` | `#2cbe4e` | Safe to auto-merge |
-| `wontfix` | `#ffffff` | Will not be fixed |
+| Label             | Color     | Descripción        |
+| ----------------- | --------- | ------------------ |
+| `security`        | `#ee0701` | Security updates   |
+| `breaking-change` | `#d93f0b` | Breaking changes   |
+| `auto-merge`      | `#2cbe4e` | Safe to auto-merge |
+| `wontfix`         | `#ffffff` | Will not be fixed  |
 
 ---
 

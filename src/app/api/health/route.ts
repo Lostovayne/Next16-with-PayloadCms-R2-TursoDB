@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
 /**
  * Health Check Endpoint
@@ -13,10 +13,10 @@ export async function GET() {
       uptime: process.uptime(),
       environment: process.env.NODE_ENV,
       version: process.env.npm_package_version || '1.0.0',
-    }
+    };
 
     // Retornar status 200 OK
-    return NextResponse.json(healthCheck, { status: 200 })
+    return NextResponse.json(healthCheck, { status: 200 });
   } catch (error) {
     // Si hay error, retornar 503 Service Unavailable
     return NextResponse.json(
@@ -26,6 +26,6 @@ export async function GET() {
         error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 503 }
-    )
+    );
   }
 }

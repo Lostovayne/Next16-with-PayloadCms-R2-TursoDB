@@ -1,17 +1,17 @@
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { s3Storage } from '@payloadcms/storage-s3'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { sqliteAdapter } from '@payloadcms/db-sqlite';
+import { s3Storage } from '@payloadcms/storage-s3';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
 
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import path from 'path';
+import { buildConfig } from 'payload';
+import { fileURLToPath } from 'url';
+import sharp from 'sharp';
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
+import { Users } from './collections/Users';
+import { Media } from './collections/Media';
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
@@ -52,4 +52,4 @@ export default buildConfig({
       disableLocalStorage: true,
     }),
   ],
-})
+});

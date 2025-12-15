@@ -494,7 +494,7 @@ collections: [
     // - Refresh tokens
     // - Email verification
   },
-]
+];
 ```
 
 ### Control de Acceso
@@ -593,16 +593,16 @@ fields: [
 
 ```typescript
 // Colecciones: PascalCase
-export const Posts: CollectionConfig
+export const Posts: CollectionConfig;
 
 // Campos: camelCase
-name: 'publishedAt'
+name: 'publishedAt';
 
 // Slugs: kebab-case
-slug: 'blog-posts'
+slug: 'blog-posts';
 
 // Archivos: kebab-case
-user - profile.tsx
+user - profile.tsx;
 ```
 
 ### Estructura de Colección
@@ -623,7 +623,7 @@ export const CollectionName: CollectionConfig = {
     /* ... */
   ],
   timestamps: true,
-}
+};
 ```
 
 ---
