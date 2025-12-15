@@ -49,6 +49,9 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copiar código fuente
 COPY . .
 
+# Crear directorio public si no existe (Next.js lo requiere)
+RUN mkdir -p public
+
 # Variables de entorno para build
 # IMPORTANTE: Estas son solo para build time
 # Las variables de runtime se pasan al contenedor

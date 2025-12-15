@@ -387,6 +387,10 @@ mi-proyecto-2025/
 │   │   └── dependabot-automerge.yml
 │   └── dependabot.yml           # Configuración de Dependabot
 │
+├── 📁 public/                     # Archivos estáticos públicos
+│   ├── robots.txt                # Configuración de robots
+│   └── .gitkeep                  # Mantener directorio en git
+│
 ├── 🔒 .env                        # Variables de entorno (gitignored)
 ├── 📋 .env.example                # Plantilla de variables
 ├── 📦 package.json                # Dependencias y scripts

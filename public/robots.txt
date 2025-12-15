@@ -1,0 +1,6 @@
+# Allow all robots
+User-agent: *
+Allow: /
+
+# Sitemap (actualizar cuando tengas uno)
+# Sitemap: https://tu-dominio.com/sitemap.xml

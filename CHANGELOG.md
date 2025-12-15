@@ -14,6 +14,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 - **Variables no utilizadas** - Corregido en `my-route/route.ts` con prefijo underscore
 - **Archivo generado en lint** - Excluido `importMap.js` de ESLint
 - **Cache path validation error** - Reemplazado `cache: 'pnpm'` con configuración explícita de caché en workflows
+- **Docker build failing on missing public directory** - Agregado `mkdir -p public` en Dockerfile para crear directorio si no existe
 
 ### 🚀 Cambiado
 
@@ -28,6 +29,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 - Dependencias: `typescript-eslint`, `@eslint/js`, `@eslint/eslintrc`
 - Documentación mejorada sobre manejo de variables de entorno en Vercel
 - Explicación de política de publicación Docker en documentación
+- Directorio `public/` con `robots.txt` y README para archivos estáticos
 
 ### 🗑️ Removido
 
