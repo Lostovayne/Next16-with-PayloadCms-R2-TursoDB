@@ -1,6 +1,6 @@
 # 🚀 Payload CMS 3.0 + Next.js 15 + Turso + Cloudflare R2
 
-[![Payload CMS](https://img.shields.io/badge/Payload%20CMS-3.68.4-00D1B2?style=for-the-badge&logo=payload&logoColor=white)](https://payloadcms.com)
+[![Payload CMS](https://img.shields.io/badge/Payload%20CMS-3.68.5-00D1B2?style=for-the-badge&logo=payload&logoColor=white)](https://payloadcms.com)
 [![Next.js](https://img.shields.io/badge/Next.js-15.4.10-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Turso](https://img.shields.io/badge/Turso-SQLite-4EE6C1?style=for-the-badge&logo=sqlite&logoColor=white)](https://turso.tech)
@@ -36,6 +36,7 @@ Plantilla completa de Payload CMS 3.0 con Next.js 15, base de datos Turso (SQLit
 - [Estructura del Proyecto](#-estructura-del-proyecto)
 - [Despliegue](#-despliegue)
 - [Solución de Problemas](#-solución-de-problemas)
+  - [Versiones de Payload desajustadas](#versiones-de-payload-desajustadas)
 - [Aprender Más](#-aprender-más)
 
 ## ✨ Características
@@ -44,7 +45,7 @@ Plantilla completa de Payload CMS 3.0 con Next.js 15, base de datos Turso (SQLit
 
 | Tecnología         | Versión | Propósito                                           |
 | ------------------ | ------- | --------------------------------------------------- |
-| **Payload CMS**    | 3.68.4  | Sistema de gestión de contenidos moderno y headless |
+| **Payload CMS**    | 3.68.5  | Sistema de gestión de contenidos moderno y headless |
 | **Next.js**        | 15.4.10 | Framework React con App Router y SSR                |
 | **Turso Database** | Latest  | Base de datos SQLite distribuida y serverless       |
 | **Cloudflare R2**  | Latest  | Almacenamiento de archivos compatible con S3        |
@@ -464,6 +465,51 @@ docker-compose up -d
 4. Usa el comando de start: `pnpm start`
 
 ## 🔧 Solución de Problemas
+
+### Versiones de Payload desajustadas
+
+**Error:**
+
+```
+Error: Mismatching "payload" dependency versions found: @payloadcms/plugin-cloud-storage@3.68.4 (Please change this to 3.68.5).
+All "payload" packages must have the same version.
+```
+
+**Causa:**
+Payload CMS requiere que **todas** las dependencias `@payloadcms/*` y `payload` tengan exactamente la misma versión. Cuando Dependabot actualiza solo algunas, se produce este desajuste.
+
+**Solución:**
+
+1. **Identificar versiones diferentes:**
+
+   ```bash
+   grep -E '"(@payloadcms/|payload)' package.json
+   ```
+
+2. **Actualizar todas a la misma versión en `package.json`:**
+   Asegúrate de que NO tengan `^` o `~` (versión exacta):
+
+   ```json
+   {
+     "dependencies": {
+       "@payloadcms/db-sqlite": "3.68.5",
+       "@payloadcms/next": "3.68.5",
+       "@payloadcms/richtext-lexical": "3.68.5",
+       "@payloadcms/storage-s3": "3.68.5",
+       "@payloadcms/ui": "3.68.5",
+       "payload": "3.68.5"
+     }
+   }
+   ```
+
+3. **Reinstalar:**
+
+   ```bash
+   pnpm install
+   ```
+
+**Prevención:**
+Este proyecto tiene Dependabot configurado para agrupar todas las actualizaciones de Payload en un solo PR, previniendo este problema.
 
 ### Error: "Cannot connect to Turso"
 

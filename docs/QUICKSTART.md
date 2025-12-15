@@ -123,6 +123,7 @@ pnpm payload migrate  # Ejecutar migraciones
 ## 🔧 Problemas Comunes
 
 ### ❌ Error: "PAYLOAD_SECRET is required"
+
 ```bash
 # Generar un nuevo secreto
 openssl rand -base64 32
@@ -130,6 +131,7 @@ openssl rand -base64 32
 ```
 
 ### ❌ Error: "Cannot connect to Turso"
+
 ```bash
 # Verificar credenciales
 turso db show mi-proyecto-db --url
@@ -138,10 +140,12 @@ turso db tokens create mi-proyecto-db
 ```
 
 ### ❌ Error: "R2 bucket not found"
+
 - Verifica que `R2_BUCKET_NAME` sea exacto (sin espacios)
 - Verifica que las credenciales tengan permisos
 
 ### ❌ Error de build o caché
+
 ```bash
 # Limpiar todo y reiniciar
 rm -rf .next node_modules

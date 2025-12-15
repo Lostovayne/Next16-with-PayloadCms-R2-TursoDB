@@ -19,12 +19,15 @@ updates:
 
     # AGRUPACIÓN MEJORADA - Reduce el número de PRs
     groups:
-      # Grupo 1: Payload CMS (TODO junto en 1 PR)
+      # Grupo 1: Payload CMS (TODO junto en 1 PR - CRÍTICO: todas las versiones deben coincidir)
       payload-ecosystem:
         patterns:
           - '@payloadcms/*'
           - 'payload'
+        # Incluir TODOS los tipos de actualización (major, minor, patch)
+        # para que Payload se actualice siempre completo
         update-types:
+          - 'major'
           - 'minor'
           - 'patch'
 
@@ -138,11 +141,49 @@ updates:
       prefix-development: 'chore'
       include: 'scope'
 
-    # Permitir solo actualizaciones menores y patches (no major)
-    # Las actualizaciones major requerirán revisión manual
+    # Bloquear actualizaciones major para la mayoría de paquetes
+    # EXCEPCIÓN: Payload CMS puede actualizarse a major (todas las versiones deben coincidir)
     ignore:
-      - dependency-name: '*'
+      # React ecosystem - solo minor/patch
+      - dependency-name: 'react'
         update-types: ['version-update:semver-major']
+      - dependency-name: 'react-dom'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'next'
+        update-types: ['version-update:semver-major']
+
+      # Database - solo minor/patch
+      - dependency-name: 'drizzle-kit'
+        update-types: ['version-update:semver-major']
+
+      # AWS SDK - solo minor/patch
+      - dependency-name: '@aws-sdk/*'
+        update-types: ['version-update:semver-major']
+
+      # Testing - solo minor/patch
+      - dependency-name: 'vitest'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'playwright'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@playwright/*'
+        update-types: ['version-update:semver-major']
+
+      # TypeScript - solo minor/patch
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+
+      # Build tools - solo minor/patch
+      - dependency-name: 'sharp'
+        update-types: ['version-update:semver-major']
+
+      # Linting - solo minor/patch
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'prettier'
+        update-types: ['version-update:semver-major']
+
+      # NOTA: @payloadcms/* y payload NO están en la lista de ignore
+      # Esto permite que se actualicen a major versions cuando sea necesario
 
     # Rebase automático de PRs
     rebase-strategy: 'auto'

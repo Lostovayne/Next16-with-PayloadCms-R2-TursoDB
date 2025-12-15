@@ -8,6 +8,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 ## [Sin Publicar]
 
 ### Por Agregar
+
 - Sistema de comentarios
 - Autenticación con OAuth (Google, GitHub)
 - Dashboard de analytics
@@ -15,6 +16,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 - Búsqueda avanzada con filtros
 
 ### Por Cambiar
+
 - Mejorar performance del admin panel
 - Optimizar carga de imágenes
 
@@ -27,42 +29,49 @@ Primera versión estable de la plantilla Payload CMS 3.0 + Next.js 15.
 ### ✨ Características
 
 #### Core
+
 - ✅ **Payload CMS 3.0** - Sistema de gestión de contenidos moderno
 - ✅ **Next.js 15** - Framework React con App Router
 - ✅ **TypeScript** - Tipado estático completo
 - ✅ **Lexical Editor** - Editor de texto rico integrado
 
 #### Base de Datos
+
 - ✅ **Turso Database** - SQLite serverless distribuido
 - ✅ **Drizzle ORM** - ORM type-safe para migraciones
 - ✅ Migraciones automáticas configuradas
 - ✅ Push automático al schema en producción
 
 #### Almacenamiento
+
 - ✅ **Cloudflare R2** - Almacenamiento compatible con S3
 - ✅ Plugin de storage S3 integrado
 - ✅ Subida de archivos optimizada
 - ✅ Deshabilitación de almacenamiento local
 
 #### Colecciones
+
 - ✅ **Users** - Gestión de usuarios con autenticación
 - ✅ **Media** - Gestión de archivos multimedia
 - ✅ Relaciones configuradas entre colecciones
 - ✅ Control de acceso por rol
 
 #### Testing
+
 - ✅ **Vitest** - Tests de integración configurados
 - ✅ **Playwright** - Tests E2E configurados
 - ✅ Scripts de testing en package.json
 - ✅ Configuración de test.env
 
 #### DevOps
+
 - ✅ **Docker** - Dockerfile y docker-compose incluidos
 - ✅ **Vercel** - Configuración optimizada para Vercel
 - ✅ **ESLint** - Linting configurado
 - ✅ **Prettier** - Formato de código configurado
 
 #### Documentación
+
 - ✅ **README.md** - Documentación principal completa
 - ✅ **docs/QUICKSTART.md** - Guía de inicio rápido (5 min)
 - ✅ **docs/DEVELOPMENT.md** - Guía de desarrollo extensiva
@@ -88,6 +97,7 @@ Primera versión estable de la plantilla Payload CMS 3.0 + Next.js 15.
 ### 🔧 Configuración
 
 #### Variables de Entorno Requeridas
+
 - `PAYLOAD_SECRET` - Secreto de encriptación
 - `TURSO_DATABASE_URL` - URL de base de datos Turso
 - `TURSO_AUTH_TOKEN` - Token de autenticación Turso
@@ -97,6 +107,7 @@ Primera versión estable de la plantilla Payload CMS 3.0 + Next.js 15.
 - `R2_ENDPOINT` - Endpoint de R2
 
 #### Características de Configuración
+
 - ✅ Cross-env para compatibilidad multiplataforma
 - ✅ NODE_OPTIONS optimizadas para builds grandes
 - ✅ Webpack configurado para módulos nativos
@@ -129,6 +140,7 @@ pnpm payload          # CLI de Payload
 ### 📚 Documentación Incluida
 
 #### Para Usuarios
+
 - Guía rápida de inicio (5 minutos)
 - Tutorial completo de desarrollo
 - Referencia de comandos
@@ -136,6 +148,7 @@ pnpm payload          # CLI de Payload
 - Guía de despliegue
 
 #### Para Desarrolladores
+
 - Arquitectura del proyecto
 - Crear colecciones personalizadas
 - Configuración de campos
@@ -145,6 +158,7 @@ pnpm payload          # CLI de Payload
 - Testing
 
 #### Para Contribuidores
+
 - Código de conducta
 - Proceso de contribución
 - Estándares de código

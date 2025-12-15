@@ -46,7 +46,7 @@ mi-proyecto-2025/
 Crea un nuevo archivo en `src/collections/Posts.ts`:
 
 ```typescript
-import { CollectionConfig } from 'payload'
+import { CollectionConfig } from 'payload';
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -83,9 +83,9 @@ export const Posts: CollectionConfig = {
               return data.title
                 .toLowerCase()
                 .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-')
+                .replace(/\s+/g, '-');
             }
-            return value
+            return value;
           },
         ],
       },
@@ -169,7 +169,7 @@ export const Posts: CollectionConfig = {
     },
   ],
   timestamps: true, // Agrega createdAt y updatedAt
-}
+};
 ```
 
 ### Paso 2: Registrar la colección
@@ -177,7 +177,7 @@ export const Posts: CollectionConfig = {
 En `src/payload.config.ts`:
 
 ```typescript
-import { Posts } from './collections/Posts'
+import { Posts } from './collections/Posts';
 
 export default buildConfig({
   // ... otras configuraciones
@@ -187,7 +187,7 @@ export default buildConfig({
     Posts, // ← Agregar aquí
   ],
   // ...
-})
+});
 ```
 
 ### Paso 3: Generar tipos y migrar
@@ -370,43 +370,43 @@ export const Posts: CollectionConfig = {
     beforeChange: [
       ({ data, req, operation }) => {
         if (operation === 'create') {
-          data.author = req.user.id
-          data.createdAt = new Date()
+          data.author = req.user.id;
+          data.createdAt = new Date();
         }
-        return data
+        return data;
       },
     ],
-    
+
     // Después de crear
     afterChange: [
       async ({ doc, req, operation }) => {
         if (operation === 'create') {
           // Enviar email, notificación, etc.
-          console.log(`Nuevo post creado: ${doc.title}`)
+          console.log(`Nuevo post creado: ${doc.title}`);
         }
       },
     ],
-    
+
     // Antes de leer
     beforeRead: [
       ({ doc, req }) => {
         // Modificar documento antes de devolverlo
-        return doc
+        return doc;
       },
     ],
-    
+
     // Antes de eliminar
     beforeDelete: [
       async ({ req, id }) => {
         // Verificar si se puede eliminar
-        console.log(`Eliminando post: ${id}`)
+        console.log(`Eliminando post: ${id}`);
       },
     ],
   },
   fields: [
     // ...campos
   ],
-}
+};
 ```
 
 ### Validación Personalizada
@@ -509,7 +509,7 @@ export const Comments: CollectionConfig = {
       defaultValue: false,
     },
   ],
-}
+};
 ```
 
 ## 🔐 Control de Acceso
@@ -522,33 +522,33 @@ export const Posts: CollectionConfig = {
   access: {
     // Lectura: Todos pueden leer posts publicados
     read: ({ req: { user } }) => {
-      if (user) return true // Usuarios ven todo
+      if (user) return true; // Usuarios ven todo
       return {
-        status: { equals: 'published' } // Público solo ve publicados
-      }
+        status: { equals: 'published' }, // Público solo ve publicados
+      };
     },
-    
+
     // Crear: Solo usuarios autenticados
     create: ({ req: { user } }) => !!user,
-    
+
     // Actualizar: Solo el autor o admin
     update: ({ req: { user } }) => {
-      if (!user) return false
-      if (user.role === 'admin') return true
+      if (!user) return false;
+      if (user.role === 'admin') return true;
       return {
-        author: { equals: user.id }
-      }
+        author: { equals: user.id },
+      };
     },
-    
+
     // Eliminar: Solo admin
     delete: ({ req: { user } }) => {
-      return user?.role === 'admin'
+      return user?.role === 'admin';
     },
   },
   fields: [
     // ...
   ],
-}
+};
 ```
 
 ### Nivel de Campo
@@ -587,7 +587,7 @@ export const Users: CollectionConfig = {
     },
     // ... otros campos
   ],
-}
+};
 ```
 
 ## 🎨 Personalizar el Admin Panel
@@ -614,7 +614,7 @@ export default buildConfig({
     },
   },
   // ...
-})
+});
 ```
 
 ### Personalizar vista de lista
@@ -634,7 +634,7 @@ export const Posts: CollectionConfig = {
     },
   },
   // ...
-}
+};
 ```
 
 ## 🌐 API y Endpoints
@@ -655,19 +655,19 @@ DELETE /api/posts/:id      # Eliminar
 
 ```typescript
 // Con filtros
-fetch('/api/posts?where[status][equals]=published')
+fetch('/api/posts?where[status][equals]=published');
 
 // Con población
-fetch('/api/posts?depth=1') // Incluye relaciones
+fetch('/api/posts?depth=1'); // Incluye relaciones
 
 // Con límite y paginación
-fetch('/api/posts?limit=10&page=2')
+fetch('/api/posts?limit=10&page=2');
 
 // Con ordenamiento
-fetch('/api/posts?sort=-createdAt') // Descendente
+fetch('/api/posts?sort=-createdAt'); // Descendente
 
 // Búsqueda
-fetch('/api/posts?where[title][like]=next')
+fetch('/api/posts?where[title][like]=next');
 ```
 
 ### Endpoint Personalizado
@@ -675,13 +675,13 @@ fetch('/api/posts?where[title][like]=next')
 Crea `src/app/api/custom/route.ts`:
 
 ```typescript
-import { NextRequest, NextResponse } from 'next/server'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
+import { NextRequest, NextResponse } from 'next/server';
+import { getPayload } from 'payload';
+import config from '@/payload.config';
 
 export async function GET(request: NextRequest) {
-  const payload = await getPayload({ config })
-  
+  const payload = await getPayload({ config });
+
   const posts = await payload.find({
     collection: 'posts',
     where: {
@@ -691,9 +691,9 @@ export async function GET(request: NextRequest) {
     },
     limit: 10,
     sort: '-createdAt',
-  })
-  
-  return NextResponse.json(posts)
+  });
+
+  return NextResponse.json(posts);
 }
 ```
 
@@ -744,14 +744,14 @@ npx drizzle-kit push
 Crea `tests/integration/posts.test.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
+import { describe, it, expect } from 'vitest';
+import { getPayload } from 'payload';
+import config from '@/payload.config';
 
 describe('Posts Collection', () => {
   it('should create a post', async () => {
-    const payload = await getPayload({ config })
-    
+    const payload = await getPayload({ config });
+
     const post = await payload.create({
       collection: 'posts',
       data: {
@@ -759,12 +759,113 @@ describe('Posts Collection', () => {
         content: 'Test content',
         status: 'draft',
       },
-    })
-    
-    expect(post.title).toBe('Test Post')
-  })
-})
+    });
+
+    expect(post.title).toBe('Test Post');
+  });
+});
 ```
+
+## 🔧 Troubleshooting
+
+### Error: Mismatching Payload dependency versions
+
+**Síntoma:**
+
+```
+Error: Mismatching "payload" dependency versions found: @payloadcms/plugin-cloud-storage@3.68.4 (Please change this to 3.68.5).
+All "payload" packages must have the same version.
+```
+
+**Causa:**
+Payload CMS requiere que **todas** las dependencias `@payloadcms/*` y `payload` tengan exactamente la misma versión. Cuando Dependabot u otra herramienta actualiza solo algunas de ellas, se produce este error.
+
+**Solución:**
+
+1. **Identificar las versiones:**
+
+   ```bash
+   grep -E '"(@payloadcms/|payload)' package.json
+   ```
+
+2. **Actualizar todas a la misma versión:**
+   Edita `package.json` y asegúrate de que todas las dependencias de Payload tengan la misma versión (sin `^` o `~`):
+
+   ```json
+   {
+     "dependencies": {
+       "@payloadcms/db-sqlite": "3.68.5",
+       "@payloadcms/next": "3.68.5",
+       "@payloadcms/richtext-lexical": "3.68.5",
+       "@payloadcms/storage-s3": "3.68.5",
+       "@payloadcms/ui": "3.68.5",
+       "payload": "3.68.5"
+     }
+   }
+   ```
+
+3. **Reinstalar dependencias:**
+
+   ```bash
+   pnpm install
+   ```
+
+4. **Verificar:**
+   ```bash
+   pnpm dev
+   ```
+
+**Prevención:**
+El proyecto ya está configurado con Dependabot para agrupar todas las actualizaciones de Payload en un solo PR. Esto previene desajustes de versiones.
+
+Si necesitas actualizar Payload manualmente:
+
+```bash
+# Actualizar todas las dependencias de Payload a la última versión
+pnpm update @payloadcms/db-sqlite @payloadcms/next @payloadcms/richtext-lexical @payloadcms/storage-s3 @payloadcms/ui payload
+
+# O especificar una versión exacta
+pnpm add @payloadcms/db-sqlite@3.68.5 @payloadcms/next@3.68.5 @payloadcms/richtext-lexical@3.68.5 @payloadcms/storage-s3@3.68.5 @payloadcms/ui@3.68.5 payload@3.68.5
+```
+
+### Error: Database connection issues
+
+**Síntoma:**
+
+```
+Error: Failed to connect to database
+```
+
+**Solución:**
+
+1. Verifica que las variables de entorno de Turso estén configuradas correctamente en `.env`
+2. Asegúrate de que la base de datos existe en Turso
+3. Verifica que el token de autenticación sea válido
+4. Revisa la conectividad de red
+
+### Error: R2 upload fails
+
+**Síntoma:**
+Los archivos no se suben a Cloudflare R2.
+
+**Solución:**
+
+1. Verifica las credenciales de R2 en `.env`
+2. Asegúrate de que el bucket existe
+3. Verifica los permisos del token de acceso
+4. Revisa los logs del servidor para más detalles
+
+### Dependabot crea demasiados PRs
+
+**Síntoma:**
+Recibes muchos PRs individuales de Dependabot.
+
+**Solución:**
+El proyecto ya está configurado con agrupación de dependencias en `.github/dependabot.yml`. Si aún recibes muchos PRs:
+
+1. Ajusta los grupos en `dependabot.yml`
+2. Reduce `open-pull-requests-limit`
+3. Cambia el intervalo de actualización de `weekly` a `monthly`
 
 ## 📚 Recursos Adicionales
 

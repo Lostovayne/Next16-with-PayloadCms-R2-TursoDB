@@ -28,6 +28,7 @@ jobs:
       is-minor-or-patch: ${{ steps.check-update-type.outputs.is-minor-or-patch }}
       dependency-names: ${{ steps.metadata.outputs.dependency-names }}
       update-type: ${{ steps.metadata.outputs.update-type }}
+      is-payload-update: ${{ steps.check-update-type.outputs.is-payload-update }}
 
     steps:
       - name: Fetch Dependabot metadata
@@ -40,12 +41,24 @@ jobs:
         id: check-update-type
         run: |
           UPDATE_TYPE="${{ steps.metadata.outputs.update-type }}"
+          DEPENDENCY_NAMES="${{ steps.metadata.outputs.dependency-names }}"
           echo "Update type: $UPDATE_TYPE"
+          echo "Dependencies: $DEPENDENCY_NAMES"
 
-          if [[ "$UPDATE_TYPE" == "version-update:semver-patch" ]] || [[ "$UPDATE_TYPE" == "version-update:semver-minor" ]]; then
+          # Check if this is a Payload CMS update
+          if [[ "$DEPENDENCY_NAMES" == *"@payloadcms/"* ]] || [[ "$DEPENDENCY_NAMES" == *"payload"* ]]; then
+            echo "is-payload-update=true" >> $GITHUB_OUTPUT
+            echo "🔧 Payload CMS update detected - special handling enabled"
+
+            # For Payload, auto-merge ALL updates (major/minor/patch) because all packages must stay in sync
+            echo "is-minor-or-patch=true" >> $GITHUB_OUTPUT
+            echo "✅ Payload update - auto-merge enabled (all @payloadcms/* must update together)"
+          elif [[ "$UPDATE_TYPE" == "version-update:semver-patch" ]] || [[ "$UPDATE_TYPE" == "version-update:semver-minor" ]]; then
+            echo "is-payload-update=false" >> $GITHUB_OUTPUT
             echo "is-minor-or-patch=true" >> $GITHUB_OUTPUT
             echo "✅ This is a minor or patch update - eligible for auto-merge"
           else
+            echo "is-payload-update=false" >> $GITHUB_OUTPUT
             echo "is-minor-or-patch=false" >> $GITHUB_OUTPUT
             echo "❌ This is a major update - requires manual review"
           fi
@@ -59,7 +72,12 @@ jobs:
           echo "| Dependencies | ${{ steps.metadata.outputs.dependency-names }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Update Type | ${{ steps.metadata.outputs.update-type }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Package Ecosystem | ${{ steps.metadata.outputs.package-ecosystem }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Payload CMS Update | ${{ steps.check-update-type.outputs.is-payload-update }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Auto-merge Eligible | ${{ steps.check-update-type.outputs.is-minor-or-patch }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ steps.check-update-type.outputs.is-payload-update }}" == "true" ]]; then
+            echo "⚠️ **Note:** Payload CMS packages must all have the same version. This update includes all @payloadcms/* packages to keep them in sync." >> $GITHUB_STEP_SUMMARY
+          fi
 
   # Job 2: Auto-approve PRs menores
   auto-approve:
@@ -71,7 +89,19 @@ jobs:
     steps:
       - name: Approve PR
         run: |
-          gh pr review "$PR_NUMBER" --repo "$REPO" --approve --body "✅ **Auto-approved by GitHub Actions**
+          if [[ "${{ needs.dependabot-metadata.outputs.is-payload-update }}" == "true" ]]; then
+            APPROVAL_MESSAGE="✅ **Auto-approved by GitHub Actions**
+
+          This is a Payload CMS update (${{ needs.dependabot-metadata.outputs.update-type }}).
+
+          **Dependencies updated:**
+          ${{ needs.dependabot-metadata.outputs.dependency-names }}
+
+          ⚠️ **Important:** All @payloadcms/* packages must have the same version. This grouped update ensures version consistency.
+
+          The PR will be automatically merged once all CI checks pass."
+          else
+            APPROVAL_MESSAGE="✅ **Auto-approved by GitHub Actions**
 
           This is a ${{ needs.dependabot-metadata.outputs.update-type }} update.
 
@@ -79,6 +109,9 @@ jobs:
           ${{ needs.dependabot-metadata.outputs.dependency-names }}
 
           The PR will be automatically merged once all CI checks pass."
+          fi
+
+          gh pr review "$PR_NUMBER" --repo "$REPO" --approve --body "$APPROVAL_MESSAGE"
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
@@ -112,6 +145,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const isPayloadUpdate = '${{ needs.dependabot-metadata.outputs.is-payload-update }}' === 'true';
+            const payloadNote = isPayloadUpdate
+              ? '\n\n⚠️ **Note:** This is a Payload CMS update. All @payloadcms/* packages must have the same version, so this PR updates all of them together.'
+              : '';
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -121,7 +159,7 @@ jobs:
             This PR will be automatically merged once all required checks pass.
 
             **Update Type:** ${{ needs.dependabot-metadata.outputs.update-type }}
-            **Dependencies:** ${{ needs.dependabot-metadata.outputs.dependency-names }}
+            **Dependencies:** ${{ needs.dependabot-metadata.outputs.dependency-names }}${payloadNote}
 
             ---
             *Powered by Dependabot Auto-Merge*`

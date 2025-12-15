@@ -1,0 +1,87 @@
+# ===================================
+# .eslintignore
+# Archivos que NO deben ser linted
+# ===================================
+
+# Lockfiles
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Dependencias
+node_modules/
+.pnp/
+.pnp.js
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+.vercel/
+.turbo/
+
+# Payload CMS generado automáticamente
+src/payload-types.ts
+
+# Migraciones generadas (SQL y otros)
+src/migrations/
+*.sql
+
+# Cache y temporales
+.cache/
+*.tsbuildinfo
+.eslintcache
+tmp/
+temp/
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Environment
+.env
+.env.*
+
+# Public assets
+public/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Docker
+Dockerfile
+Dockerfile.*
+.dockerignore
+
+# Git
+.git/
+
+# Configuraciones
+next-env.d.ts
+vercel.json
+
+# Archivos generados por herramientas
+*.min.js
+*.min.css
+*.bundle.js
+
+# Media
+media/
+uploads/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.eot

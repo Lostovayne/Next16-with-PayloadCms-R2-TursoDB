@@ -26,22 +26,26 @@ pnpm dev
 **Descripción:** Inicia el servidor de desarrollo de Next.js con hot-reload.
 
 **Detalles:**
+
 - Puerto por defecto: `3000`
 - Hot-reload automático
 - Muestra errores en tiempo real
 - Incluye React Fast Refresh
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation next dev
 ```
 
 **Cuándo usar:**
+
 - Desarrollo diario
 - Probar cambios en tiempo real
 - Depuración local
 
 **Acceso:**
+
 - Frontend: http://localhost:3000
 - Admin Panel: http://localhost:3000/admin
 - API: http://localhost:3000/api
@@ -57,16 +61,19 @@ pnpm devsafe
 **Descripción:** Inicia el servidor de desarrollo después de limpiar el caché de Next.js.
 
 **Detalles:**
+
 - Elimina la carpeta `.next/`
 - Resuelve problemas de caché
 - Útil cuando hay errores extraños
 
 **Equivalente a:**
+
 ```bash
 rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev
 ```
 
 **Cuándo usar:**
+
 - Después de cambiar configuraciones importantes
 - Cuando el hot-reload no funciona correctamente
 - Errores de compilación persistentes
@@ -85,6 +92,7 @@ pnpm build
 **Descripción:** Construye la aplicación optimizada para producción.
 
 **Detalles:**
+
 - Genera el import map automáticamente
 - Optimiza el código JavaScript/TypeScript
 - Compila páginas estáticas
@@ -92,15 +100,18 @@ pnpm build
 - Asigna 8GB de memoria a Node.js
 
 **Equivalente a:**
+
 ```bash
 pnpm run generate:importmap && cross-env NODE_OPTIONS="--no-deprecation --max-old-space-size=8000" next build
 ```
 
 **Proceso:**
+
 1. `generate:importmap` - Genera mapeo de imports
 2. `next build` - Compila la aplicación
 
 **Salida:**
+
 ```
 .next/
 ├── static/          # Assets estáticos
@@ -109,6 +120,7 @@ pnpm run generate:importmap && cross-env NODE_OPTIONS="--no-deprecation --max-ol
 ```
 
 **Cuándo usar:**
+
 - Antes de desplegar a producción
 - Para probar el build localmente
 - Verificar el tamaño de los bundles
@@ -124,17 +136,20 @@ pnpm start
 **Descripción:** Inicia el servidor de producción (requiere `pnpm build` primero).
 
 **Detalles:**
+
 - Usa el build optimizado
 - Sin hot-reload
 - Rendimiento máximo
 - Puerto por defecto: `3000`
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation next start
 ```
 
 **Cuándo usar:**
+
 - Probar el build de producción localmente
 - Verificar rendimiento
 - Testing de pre-producción
@@ -154,17 +169,20 @@ pnpm generate:types
 **Descripción:** Genera tipos TypeScript basados en las colecciones de Payload.
 
 **Detalles:**
+
 - Lee todas las colecciones en `src/collections/`
 - Genera `src/payload-types.ts`
 - Proporciona autocompletado en el IDE
 - Type-safety completo
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation payload generate:types
 ```
 
 **Salida:**
+
 ```typescript
 // src/payload-types.ts
 export interface User {
@@ -181,6 +199,7 @@ export interface Media {
 ```
 
 **Cuándo usar:**
+
 - Después de modificar colecciones
 - Después de agregar nuevos campos
 - Cuando los tipos no coinciden
@@ -197,17 +216,20 @@ pnpm generate:importmap
 **Descripción:** Genera el mapa de importaciones para Payload Admin UI.
 
 **Detalles:**
+
 - Escanea componentes personalizados
 - Genera mapeo de rutas
 - Requerido para el admin panel
 - Se ejecuta automáticamente en `pnpm build`
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap
 ```
 
 **Cuándo usar:**
+
 - Después de agregar componentes custom al admin
 - Antes de hacer build
 - Si el admin no carga correctamente
@@ -225,12 +247,15 @@ pnpm payload [comando]
 **Comandos disponibles:**
 
 #### Crear primer usuario
+
 ```bash
 pnpm payload create-first-user
 ```
+
 Interactivo - te pedirá email y password.
 
 #### Migraciones
+
 ```bash
 # Crear nueva migración
 pnpm payload migrate:create
@@ -249,11 +274,13 @@ pnpm payload migrate:reset
 ```
 
 #### Seed (datos de prueba)
+
 ```bash
 pnpm payload seed
 ```
 
 #### Generar archivos
+
 ```bash
 # Generar tipos
 pnpm payload generate:types
@@ -278,11 +305,13 @@ pnpm test
 **Descripción:** Ejecuta todos los tests (integración + e2e).
 
 **Equivalente a:**
+
 ```bash
 pnpm run test:int && pnpm run test:e2e
 ```
 
 **Proceso:**
+
 1. Tests de integración (Vitest)
 2. Tests end-to-end (Playwright)
 
@@ -297,16 +326,19 @@ pnpm test:int
 **Descripción:** Ejecuta tests de integración con Vitest.
 
 **Detalles:**
+
 - Tests unitarios y de integración
 - Usa `vitest.config.mts`
 - Rápido y eficiente
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts
 ```
 
 **Ejemplo de uso:**
+
 ```bash
 # Ejecutar todos los tests
 pnpm test:int
@@ -329,16 +361,19 @@ pnpm test:e2e
 **Descripción:** Ejecuta tests end-to-end con Playwright.
 
 **Detalles:**
+
 - Tests de navegador completo
 - Simula interacciones de usuario
 - Captura screenshots en fallos
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS="--no-deprecation --no-experimental-strip-types" pnpm exec playwright test
 ```
 
 **Comandos adicionales de Playwright:**
+
 ```bash
 # Modo UI interactivo
 npx playwright test --ui
@@ -363,18 +398,21 @@ npx playwright show-report
 # Ver estado del schema
 npx drizzle-kit studio
 ```
+
 Abre un UI web en http://localhost:4983 para visualizar la BD.
 
 ```bash
 # Generar migraciones SQL
 npx drizzle-kit generate
 ```
+
 Crea archivos SQL en `src/migrations/`.
 
 ```bash
 # Push schema directamente (desarrollo)
 npx drizzle-kit push
 ```
+
 ⚠️ **Cuidado:** Aplica cambios sin crear migración. Solo en desarrollo.
 
 ```bash
@@ -419,11 +457,13 @@ pnpm lint
 **Descripción:** Ejecuta ESLint para verificar calidad del código.
 
 **Equivalente a:**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation next lint
 ```
 
 **Arreglar automáticamente:**
+
 ```bash
 pnpm lint --fix
 ```
@@ -501,16 +541,19 @@ docker-compose down -v
 ```bash
 --no-deprecation
 ```
+
 Oculta warnings de deprecación.
 
 ```bash
 --max-old-space-size=8000
 ```
+
 Asigna 8GB de memoria a Node.js (útil para builds grandes).
 
 ```bash
 --no-experimental-strip-types
 ```
+
 Desactiva el strip de tipos experimentales (Playwright).
 
 ### cross-env
@@ -518,11 +561,13 @@ Desactiva el strip de tipos experimentales (Playwright).
 El paquete `cross-env` permite establecer variables de entorno de forma compatible entre sistemas operativos (Windows, Linux, macOS).
 
 **Sin cross-env (solo Unix):**
+
 ```bash
 NODE_OPTIONS=--no-deprecation next dev
 ```
 
 **Con cross-env (multiplataforma):**
+
 ```bash
 cross-env NODE_OPTIONS=--no-deprecation next dev
 ```
@@ -672,6 +717,7 @@ taskkill /PID [PID_NUMBER] /F
 ---
 
 **¿Comando no funciona?** Verifica:
+
 1. ✅ Estás en la carpeta raíz del proyecto
 2. ✅ `node_modules/` existe (ejecuta `pnpm install`)
 3. ✅ El archivo `.env` está configurado correctamente

@@ -103,10 +103,11 @@ git push origin tipo/descripcion-corta
    - Documenta las variables en el README
 
 2. **Dependencias:**
+
    ```bash
    # Agregar nueva dependencia
    pnpm add nombre-paquete
-   
+
    # Dependencia de desarrollo
    pnpm add -D nombre-paquete
    ```
@@ -256,25 +257,31 @@ chore: actualizar dependencias
 ### Pull Requests
 
 **Título del PR:**
+
 ```
 feat: Agregar sistema de comentarios
 ```
 
 **Descripción del PR:**
+
 ```markdown
 ## Descripción
+
 Agrega una nueva colección de comentarios con soporte para:
+
 - Comentarios anidados
 - Moderación
 - Notificaciones
 
 ## Tipo de Cambio
+
 - [x] Nueva funcionalidad
 - [ ] Corrección de bug
 - [ ] Documentación
 - [ ] Refactorización
 
 ## Checklist
+
 - [x] El código sigue los estándares del proyecto
 - [x] He actualizado la documentación
 - [x] He agregado tests
@@ -282,9 +289,11 @@ Agrega una nueva colección de comentarios con soporte para:
 - [x] He actualizado .env.example si agregué variables
 
 ## Screenshots (si aplica)
+
 ![comentarios](url-imagen)
 
 ## Notas Adicionales
+
 Los comentarios se almacenan en Turso y las imágenes en R2.
 ```
 
@@ -304,6 +313,7 @@ Los comentarios se almacenan en Turso y las imágenes en R2.
 Descripción clara y concisa del bug.
 
 **Pasos para Reproducir**
+
 1. Ve a '...'
 2. Click en '....'
 3. Scroll hasta '....'
@@ -319,6 +329,7 @@ Qué sucedió realmente.
 Si aplica, agrega screenshots.
 
 **Entorno:**
+
 - OS: [ej. Windows 11, macOS 14, Ubuntu 22.04]
 - Node.js: [ej. 20.11.0]
 - pnpm: [ej. 9.1.0]
@@ -329,8 +340,11 @@ Cualquier otra información relevante.
 
 **Logs de Error**
 ```
+
 Pega aquí los logs de error
+
 ```
+
 ```
 
 ## 💡 Sugerir Mejoras
@@ -351,6 +365,7 @@ Otras soluciones o features que has considerado.
 Cualquier otro contexto, screenshots, o ejemplos.
 
 **¿Estarías dispuesto a implementarlo?**
+
 - [ ] Sí, puedo crear un PR
 - [ ] Necesito ayuda
 - [ ] Solo sugiero la idea
@@ -378,7 +393,7 @@ import config from '@/payload.config'
 describe('Comments Collection', () => {
   it('should create a comment', async () => {
     const payload = await getPayload({ config })
-    
+
     const comment = await payload.create({
       collection: 'comments',
       data: {
@@ -386,7 +401,7 @@ describe('Comments Collection', () => {
         post: '123',
       },
     })
-    
+
     expect(comment.content).toBe('Test comment')
   })
 })

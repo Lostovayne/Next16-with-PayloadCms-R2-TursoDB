@@ -247,11 +247,13 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 **Responsabilidad:** Framework principal, enrutamiento, SSR/SSG
 
 **Archivos clave:**
+
 - `src/app/` - Rutas y páginas
 - `next.config.mjs` - Configuración
 - `src/app/api/` - API Routes personalizadas
 
 **Características:**
+
 - Server Components por defecto
 - Streaming y Suspense
 - Optimización automática de imágenes
@@ -262,11 +264,13 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 **Responsabilidad:** Gestión de contenido, admin panel, APIs
 
 **Archivos clave:**
+
 - `src/payload.config.ts` - Configuración principal
 - `src/collections/` - Definiciones de colecciones
 - `src/payload-types.ts` - Tipos generados
 
 **Características:**
+
 - Admin UI automático
 - REST + GraphQL APIs
 - Sistema de autenticación
@@ -278,10 +282,12 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 **Responsabilidad:** Almacenamiento de datos estructurados
 
 **Archivos clave:**
+
 - `drizzle.conf.ts` - Configuración de ORM
 - `src/migrations/` - Migraciones de schema
 
 **Características:**
+
 - SQLite distribuido
 - Edge replicas globales
 - Latencia ultra-baja (<10ms)
@@ -292,10 +298,12 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 **Responsabilidad:** Almacenamiento de archivos y media
 
 **Configuración:**
+
 - Plugin `@payloadcms/storage-s3`
-- Variables de entorno R2_*
+- Variables de entorno R2\_\*
 
 **Características:**
+
 - Compatible con S3 API
 - Zero egress fees
 - CDN integrado
@@ -306,10 +314,12 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 **Responsabilidad:** Migraciones y schema management
 
 **Archivos clave:**
+
 - `drizzle.conf.ts`
 - `src/migrations/`
 
 **Características:**
+
 - Type-safe queries
 - Generación de migraciones
 - Push directo al schema (dev)
@@ -387,6 +397,7 @@ Vercel (recomendado)
 **Decisión:** Monolito modular con Next.js
 
 **Razones:**
+
 - ✅ Menor complejidad operacional
 - ✅ Deploy más simple
 - ✅ Menos overhead de red
@@ -403,6 +414,7 @@ Vercel (recomendado)
 **Decisión:** Turso (SQLite distribuido)
 
 **Razones:**
+
 - ✅ Edge-ready (réplicas globales)
 - ✅ Latencia ultra-baja (<10ms)
 - ✅ Plan gratuito generoso
@@ -411,6 +423,7 @@ Vercel (recomendado)
 - ✅ Branch databases (dev/staging/prod)
 
 **Limitaciones:**
+
 - ❌ No recomendado para >1000 writes/seg
 - ❌ Menos maduro que PostgreSQL
 - ❌ Algunas features SQL avanzadas limitadas
@@ -422,6 +435,7 @@ Vercel (recomendado)
 **Decisión:** Cloudflare R2
 
 **Razones:**
+
 - ✅ **Zero egress fees** (S3 cobra por descarga)
 - ✅ Compatible con S3 API (drop-in replacement)
 - ✅ CDN integrado de Cloudflare
@@ -442,6 +456,7 @@ Vercel (recomendado)
 **Decisión:** Payload CMS
 
 **Razones:**
+
 - ✅ **Code-first** (configuración en TypeScript)
 - ✅ **Type-safe** completo
 - ✅ **Self-hosted** (control total)
@@ -452,10 +467,12 @@ Vercel (recomendado)
 - ✅ **Hooks potentes** para lógica custom
 
 **vs Strapi:**
+
 - Payload es más type-safe
 - Payload se integra mejor con Next.js
 
 **vs Contentful:**
+
 - Payload es self-hosted (sin vendor lock-in)
 - Payload es gratuito (Contentful cobra por usuarios)
 
@@ -476,7 +493,7 @@ collections: [
     // - Generación de JWT
     // - Refresh tokens
     // - Email verification
-  }
+  },
 ]
 ```
 
@@ -514,13 +531,13 @@ fields: [
 
 ### Capacidades Actuales
 
-| Métrica              | Capacidad Estimada                         |
-| -------------------- | ------------------------------------------ |
-| **Requests/seg**     | ~1000 (limitado por Next.js/Vercel)        |
-| **DB reads/seg**     | ~100,000 (Turso edge replicas)             |
-| **DB writes/seg**    | ~500 (Turso primary)                       |
-| **Storage**          | Ilimitado (R2)                             |
-| **Concurrent users** | ~10,000 (con buen caching)                 |
+| Métrica              | Capacidad Estimada                          |
+| -------------------- | ------------------------------------------- |
+| **Requests/seg**     | ~1000 (limitado por Next.js/Vercel)         |
+| **DB reads/seg**     | ~100,000 (Turso edge replicas)              |
+| **DB writes/seg**    | ~500 (Turso primary)                        |
+| **Storage**          | Ilimitado (R2)                              |
+| **Concurrent users** | ~10,000 (con buen caching)                  |
 | **Media bandwidth**  | Ilimitado (R2 zero egress + Cloudflare CDN) |
 
 ### Estrategias de Escalado
@@ -585,7 +602,7 @@ name: 'publishedAt'
 slug: 'blog-posts'
 
 // Archivos: kebab-case
-user-profile.tsx
+user - profile.tsx
 ```
 
 ### Estructura de Colección
@@ -593,10 +610,18 @@ user-profile.tsx
 ```typescript
 export const CollectionName: CollectionConfig = {
   slug: 'collection-name',
-  admin: { /* ... */ },
-  access: { /* ... */ },
-  hooks: { /* ... */ },
-  fields: [ /* ... */ ],
+  admin: {
+    /* ... */
+  },
+  access: {
+    /* ... */
+  },
+  hooks: {
+    /* ... */
+  },
+  fields: [
+    /* ... */
+  ],
   timestamps: true,
 }
 ```

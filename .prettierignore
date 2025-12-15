@@ -1,0 +1,132 @@
+# ===================================
+# .prettierignore
+# Archivos que NO deben ser formateados
+# ===================================
+
+# Lockfiles (CRÍTICO - NO FORMATEAR)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+.pnpm-lock.yaml
+
+# Dependencias
+node_modules/
+.pnp/
+.pnp.js
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+.vercel/
+.turbo/
+
+# Payload CMS generado automáticamente
+src/payload-types.ts
+
+# Migraciones generadas (SQL)
+src/migrations/
+*.sql
+
+# Cache
+.cache/
+*.tsbuildinfo
+.eslintcache
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Environment files
+.env
+.env.local
+.env*.local
+.env.production
+.env.development
+
+# Generated/Minified files
+*.min.js
+*.min.css
+*.min.mjs
+
+# Public assets (pueden tener formato específico)
+public/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Docker
+Dockerfile*
+.dockerignore
+
+# Git
+.git/
+.gitignore
+.gitattributes
+.gitmodules
+
+# GitHub
+.github/dependabot.yml
+
+# Configuraciones que no deben modificarse
+tsconfig.json
+tsconfig.*.json
+next-env.d.ts
+vercel.json
+
+# Markdown (opcional - descomenta si NO quieres formatear markdown)
+# *.md
+# README.md
+# CHANGELOG.md
+
+# Package manager configs
+.npmrc
+.yarnrc
+.pnpmfile.cjs
+
+# Archivos de sistema y temporales
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Archivos binarios
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# Media uploads (runtime)
+media/
+uploads/

@@ -75,6 +75,7 @@ Archivo: `.github/dependabot.yml`
 
 ### ⚠️ Configuración Inicial Requerida: Labels
 
+<<<<<<< HEAD
 Antes de usar Dependabot, **debes crear las labels en GitHub**:
 
 1. Ve a tu repositorio → **Settings** → **Labels**
@@ -88,7 +89,7 @@ Antes de usar Dependabot, **debes crear las labels en GitHub**:
 
 **O usa el script automático:**
 
-```bash
+````bash
 # Con GitHub CLI (más fácil)
 gh label create "dependencies" --description "Pull requests that update a dependency file" --color "0366d6"
 gh label create "automated" --description "Automated pull requests" --color "7057ff"
@@ -96,7 +97,16 @@ gh label create "github-actions" --description "Pull requests that update GitHub
 gh label create "docker" --description "Pull requests that update Docker" --color "0db7ed"
 gh label create "needs-review" --description "This PR requires manual review" --color "fbca04"
 gh label create "major-update" --description "Major version update" --color "d93f0b"
-```
+=======
+```yaml
+# Ejemplos de grupos configurados:
+payload: # @payloadcms/*, payload
+react-ecosystem: # react, react-dom, next, @types/react*
+testing: # vitest, playwright, @playwright/*
+linting: # eslint, prettier
+dev-dependencies: # Todas las devDependencies
+>>>>>>> 92f1b6ce452340c0bf036770b1d55c1e083ef205
+````
 
 **Luego descomenta las líneas de `labels:` en `.github/dependabot.yml`**
 
@@ -129,17 +139,25 @@ Edita `.github/dependabot.yml`:
 schedule:
   interval: 'weekly' # daily, weekly, monthly
   day: 'monday' # monday, tuesday, etc.
-  time: '09:00' # Hora UTC
+  time: '09:00'
   timezone: 'America/New_York' # Tu zona horaria
 
 # Cambiar límite de PRs (recomendado: 3-5)
 open-pull-requests-limit: 5 # Reducido para evitar spam
 
-# Permitir actualizaciones major (⚠️ NO recomendado)
-# Elimina o comenta esta sección:
+# ⚠️ IMPORTANTE: Manejo de actualizaciones major
+# En lugar de bloquear TODO con '*', listar paquetes específicos
 ignore:
-  - dependency-name: '*'
+  # Bloquear major updates para paquetes específicos
+  - dependency-name: 'react'
     update-types: ['version-update:semver-major']
+  - dependency-name: 'next'
+    update-types: ['version-update:semver-major']
+  # ... otros paquetes
+
+  # ✅ NOTA: @payloadcms/* y payload NO están en ignore
+  # Esto permite actualizaciones major porque todos los paquetes
+  # de Payload deben tener la misma versión
 
 # Agregar más paquetes a un grupo existente
 groups:
@@ -147,16 +165,49 @@ groups:
     patterns:
       - '@payloadcms/*'
       - 'payload'
-      - 'tu-plugin-payload' # ← Agregar aquí
+    # Incluir TODOS los tipos de actualización para Payload
+    update-types:
+      - 'major'
+      - 'minor'
+      - 'patch'
 ```
 
 ### 💡 Mejores Prácticas de Agrupación
 
-1. **Agrupa por ecosistema** (React, AWS, Testing)
+1. **Agrupa por ecosistema** (React, AWS, Testing, **Payload**)
 2. **Separa prod vs dev** dependencies
 3. **Limita PRs simultáneos** a 3-5
-4. **Excluye major updates** del auto-merge
-5. **Usa nombres descriptivos** para los grupos
+4. **Bloquea major updates selectivamente** (lista explícita en `ignore`)
+5. **Excepciones para paquetes que deben actualizarse juntos** (como Payload)
+6. **Usa nombres descriptivos** para los grupos
+
+### ⚠️ Configuración Especial: Payload CMS
+
+**Problema:** Payload requiere que TODOS los paquetes `@payloadcms/*` y `payload` tengan la misma versión exacta.
+
+**Solución implementada:**
+
+1. **Grupo dedicado** que incluye ALL update types (major/minor/patch):
+
+   ```yaml
+   groups:
+     payload-ecosystem:
+       patterns:
+         - '@payloadcms/*'
+         - 'payload'
+       update-types:
+         - 'major' # ← Incluye major!
+         - 'minor'
+         - 'patch'
+   ```
+
+2. **NO incluir Payload en la lista `ignore`:**
+   - ✅ Correcto: Listar paquetes específicos en `ignore` (react, next, etc.)
+   - ❌ Incorrecto: Usar `dependency-name: '*'` (bloquearía todo)
+
+3. **Auto-merge configurado** para reconocer actualizaciones de Payload y permitir major versions
+
+**Resultado:** Cuando Dependabot detecta una nueva versión de Payload, crea UN SOLO PR que actualiza todos los paquetes `@payloadcms/*` juntos, previniendo errores de versiones desajustadas.
 
 ---
 
