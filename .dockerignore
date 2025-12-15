@@ -1,0 +1,91 @@
+# ===================================
+# .dockerignore
+# Archivos y directorios a excluir del build de Docker
+# ===================================
+
+# Dependencias
+node_modules
+npm-debug.log
+pnpm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Desarrollo
+.env
+.env*.local
+.env.development
+.env.test
+*.log
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# GitHub
+.github/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentación
+README.md
+CHANGELOG.md
+docs/
+*.md
+
+# CI/CD (no necesarios en imagen)
+.editorconfig
+.eslintrc.json
+.prettierrc.json
+.prettierignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Vercel
+.vercel/
+.vercelignore
+
+# Turso local
+*.db
+*.db-shm
+*.db-wal
+
+# Media (se sirven desde R2)
+media/
+uploads/
+public/uploads/
+
+# Misc
+.cache/
+tmp/
+temp/
+*.tmp
+
+# Pero INCLUIR estos archivos necesarios:
+!.npmrc
+!pnpm-lock.yaml
+!package.json
+!next.config.mjs
+!tsconfig.json

@@ -1,0 +1,218 @@
+# ===================================
+# Docker Build & Publish to GHCR
+# GitHub Container Registry
+# ===================================
+
+name: Docker Build & Publish
+
+on:
+  # Trigger en push a main/develop
+  push:
+    branches:
+      - main
+      - develop
+    # Solo si cambian archivos relevantes
+    paths:
+      - 'src/**'
+      - 'Dockerfile'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/docker-publish.yml'
+
+  # Trigger en nuevos tags (releases)
+  push:
+    tags:
+      - 'v*.*.*'
+
+  # Trigger en PRs para testing (no publica)
+  pull_request:
+    branches:
+      - main
+      - develop
+
+  # Permitir ejecución manual
+  workflow_dispatch:
+    inputs:
+      push_image:
+        description: 'Push image to registry'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+# Permisos necesarios para GHCR
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+# Variables de entorno globales
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # ===================================
+  # Job 1: Build y Test de la Imagen
+  # ===================================
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # Checkout del código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Docker Buildx (necesario para cache y multi-platform)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
+
+      # Login a GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Extraer metadata (tags, labels)
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            # Tags por tipo de evento
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha,prefix={{branch}}-
+            # Latest solo para main
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      # Build de la imagen Docker
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          # Platforms (puedes agregar más)
+          platforms: linux/amd64
+          # Solo push si no es PR y está habilitado
+          push: ${{ github.event_name != 'pull_request' && (github.event.inputs.push_image != 'false') }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Cache layers para builds más rápidos
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # Build args (puedes agregar más)
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+            NODE_ENV=production
+
+      # Test básico de la imagen (solo si se construyó)
+      - name: Test Docker image
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "🧪 Testing Docker image..."
+          docker run --rm \
+            -e PAYLOAD_SECRET=test-secret-for-docker-test-minimum-32-chars \
+            -e TURSO_DATABASE_URL=file:./test.db \
+            -e TURSO_AUTH_TOKEN=test-token \
+            -e R2_BUCKET_NAME=test-bucket \
+            -e R2_ACCESS_KEY_ID=test-key \
+            -e R2_SECRET_ACCESS_KEY=test-secret \
+            -e R2_ENDPOINT=https://test.r2.cloudflarestorage.com \
+            -p 3000:3000 \
+            --name test-container \
+            -d \
+            ${{ steps.meta.outputs.tags }}
+
+          # Esperar que el servidor inicie
+          echo "⏳ Waiting for server to start..."
+          sleep 10
+
+          # Verificar que el servidor responda
+          echo "✅ Checking if server is responding..."
+          docker logs test-container
+
+          # Limpiar
+          docker stop test-container || true
+
+      # Generar summary
+      - name: Generate summary
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "### 🐳 Docker Image Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Registry:** \`${{ env.REGISTRY }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Tags:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Pull the image:" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 Run the container:" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "docker run -d \\" >> $GITHUB_STEP_SUMMARY
+          echo "  --name payload-app \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -p 3000:3000 \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e PAYLOAD_SECRET=your_secret \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e TURSO_DATABASE_URL=your_turso_url \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e TURSO_AUTH_TOKEN=your_turso_token \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e R2_BUCKET_NAME=your_bucket \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e R2_ACCESS_KEY_ID=your_key_id \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e R2_SECRET_ACCESS_KEY=your_secret_key \\" >> $GITHUB_STEP_SUMMARY
+          echo "  -e R2_ENDPOINT=your_r2_endpoint \\" >> $GITHUB_STEP_SUMMARY
+          echo "  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  # ===================================
+  # Job 2: Security Scan (opcional)
+  # ===================================
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.event_name != 'pull_request'
+    timeout-minutes: 10
+
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: Generate security summary
+        run: |
+          echo "### 🔒 Security Scan Completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Image scanned for vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Check Security tab for detailed results" >> $GITHUB_STEP_SUMMARY

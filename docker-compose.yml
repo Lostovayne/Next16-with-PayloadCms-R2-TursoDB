@@ -1,43 +1,135 @@
-version: '3'
+# ===================================
+# Docker Compose - Payload CMS 3.0
+# ===================================
+# Configuración optimizada para desarrollo y producción
+
+version: '3.9'
 
 services:
-  payload:
-    image: node:18-alpine
-    ports:
-      - '3000:3000'
-    volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
-    working_dir: /home/node/app/
-    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
-    depends_on:
-      - mongo
-      # - postgres
-    env_file:
-      - .env
+  # ===================================
+  # Aplicación Principal
+  # ===================================
+  app:
+    # Opción 1: Build local (desarrollo)
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Cache de build para más velocidad
+      cache_from:
+        - ghcr.io/${GITHUB_REPOSITORY:-your-username/your-repo}:latest
+      args:
+        - NODE_ENV=production
 
-  # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
-  mongo:
-    image: mongo:latest
+    # Opción 2: Usar imagen de GHCR (producción)
+    # Descomenta y comenta el 'build' de arriba para usar imagen publicada
+    # image: ghcr.io/your-username/your-repo:latest
+
+    container_name: payload-cms-app
+    restart: unless-stopped
+
+    # Puertos
     ports:
-      - '27017:27017'
-    command:
-      - --storageEngine=wiredTiger
+      - '${PORT:-3000}:3000'
+
+    # Variables de entorno
+    # IMPORTANTE: Usa un archivo .env en producción
+    environment:
+      # Node
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+
+      # Payload CMS
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?PAYLOAD_SECRET is required}
+      NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL:-http://localhost:3000}
+
+      # Turso Database
+      TURSO_DATABASE_URL: ${TURSO_DATABASE_URL:?TURSO_DATABASE_URL is required}
+      TURSO_AUTH_TOKEN: ${TURSO_AUTH_TOKEN:?TURSO_AUTH_TOKEN is required}
+      TURSO_PUSH: ${TURSO_PUSH:-false}
+
+      # Cloudflare R2
+      R2_BUCKET_NAME: ${R2_BUCKET_NAME:?R2_BUCKET_NAME is required}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID:?R2_ACCESS_KEY_ID is required}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY:?R2_SECRET_ACCESS_KEY is required}
+      R2_ENDPOINT: ${R2_ENDPOINT:?R2_ENDPOINT is required}
+
+    # Volúmenes (opcional - para media local como fallback)
     volumes:
-      - data:/data/db
+      # Persistir archivos subidos localmente (backup)
+      - media-data:/app/media
+      # Logs (opcional)
+      - ./logs:/app/logs
+
+    # Health check
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Recursos (ajusta según necesites)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+    # Redes
+    networks:
+      - payload-network
+
+    # Logging
     logging:
-      driver: none
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
 
-  # Uncomment the following to use postgres
-  # postgres:
-  #   restart: always
-  #   image: postgres:latest
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
-
+# ===================================
+# Volúmenes
+# ===================================
 volumes:
-  data:
-  # pgdata:
-  node_modules:
+  media-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/media
+
+# ===================================
+# Redes
+# ===================================
+networks:
+  payload-network:
+    driver: bridge
+
+# ===================================
+# NOTAS DE USO
+# ===================================
+#
+# Desarrollo:
+#   docker-compose up --build
+#
+# Producción (con imagen de GHCR):
+#   1. Comenta la sección 'build'
+#   2. Descomenta la línea 'image'
+#   3. docker-compose up -d
+#
+# Detener:
+#   docker-compose down
+#
+# Ver logs:
+#   docker-compose logs -f app
+#
+# Reconstruir:
+#   docker-compose up --build --force-recreate
+#
+# Limpiar todo:
+#   docker-compose down -v
+#
+# ===================================

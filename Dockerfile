@@ -1,71 +1,129 @@
-# To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.mjs file.
-# From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
+# ===================================
+# Multi-Stage Dockerfile Optimizado
+# Payload CMS 3.0 + Next.js 15 + pnpm 10
+# ===================================
 
-FROM node:22.17.0-alpine AS base
+# ===================================
+# Stage 1: Base con pnpm
+# ===================================
+FROM node:20-alpine AS base
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+# Habilitar corepack para pnpm
+RUN corepack enable && corepack prepare pnpm@10.22.0 --activate
+
+# Instalar dependencias del sistema necesarias
 RUN apk add --no-cache libc6-compat
+
+# Configurar directorio de trabajo
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# ===================================
+# Stage 2: Dependencias
+# ===================================
+FROM base AS deps
 
+# Copiar archivos de configuración de pnpm
+COPY .npmrc* pnpm-lock.yaml package.json ./
 
-# Rebuild the source code only when needed
+# Instalar dependencias de producción
+# --frozen-lockfile: no modifica pnpm-lock.yaml
+# --prod: solo dependencias de producción
+RUN pnpm install --frozen-lockfile --prod
+
+# Guardar node_modules de producción
+RUN cp -R node_modules /prod_node_modules
+
+# Instalar TODAS las dependencias (dev + prod) para el build
+RUN pnpm install --frozen-lockfile
+
+# ===================================
+# Stage 3: Builder
+# ===================================
 FROM base AS builder
+
 WORKDIR /app
+
+# Copiar node_modules desde deps
 COPY --from=deps /app/node_modules ./node_modules
+
+# Copiar código fuente
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+# Variables de entorno para build
+# IMPORTANTE: Estas son solo para build time
+# Las variables de runtime se pasan al contenedor
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Variables de build requeridas (con valores dummy)
+# Las reales se pasan en runtime
+ENV PAYLOAD_SECRET=build-time-secret-must-be-replaced-at-runtime-with-real-secret
+ENV TURSO_DATABASE_URL=file:./build.db
+ENV TURSO_AUTH_TOKEN=build-token
+ENV R2_BUCKET_NAME=build-bucket
+ENV R2_ACCESS_KEY_ID=build-key
+ENV R2_SECRET_ACCESS_KEY=build-secret
+ENV R2_ENDPOINT=https://build.r2.cloudflarestorage.com
 
-# Production image, copy all the files and run next
-FROM base AS runner
+# Generar import map de Payload
+RUN pnpm generate:importmap
+
+# Build de Next.js
+# Next.js genera automáticamente el output standalone
+RUN pnpm build
+
+# Limpiar cache de pnpm para reducir tamaño
+RUN pnpm store prune
+
+# ===================================
+# Stage 4: Runner (Imagen Final)
+# ===================================
+FROM node:20-alpine AS runner
+
+# Instalar solo las dependencias del sistema necesarias
+RUN apk add --no-cache \
+    libc6-compat \
+    curl \
+    && rm -rf /var/cache/apk/*
+
 WORKDIR /app
 
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+# Configurar usuario no-root por seguridad
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Variables de entorno de producción
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-# Remove this line if you do not have this folder
-COPY --from=builder /app/public ./public
+# Copiar archivos públicos
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+# Crear directorio para archivos subidos (si usas local storage como fallback)
+RUN mkdir -p ./media && chown nextjs:nodejs ./media
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
+# Copiar el output standalone de Next.js
+# Next.js genera esto automáticamente con output: 'standalone'
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copiar node_modules de producción (más pequeños)
+COPY --from=deps --chown=nextjs:nodejs /prod_node_modules ./node_modules
+
+# Copiar package.json para referencia
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+
+# Cambiar a usuario no-root
 USER nextjs
 
+# Exponer puerto
 EXPOSE 3000
 
-ENV PORT 3000
+# Healthcheck para verificar que el servidor esté corriendo
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:3000/api/health || exit 1
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+# Comando para iniciar la aplicación
+CMD ["node", "server.js"]

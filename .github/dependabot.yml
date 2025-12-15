@@ -17,10 +17,10 @@ updates:
     # minor: actualizaciones menores (1.x.0)
     versioning-strategy: increase-if-necessary
 
-    # Agrupa actualizaciones para reducir PRs
+    # AGRUPACIÓN MEJORADA - Reduce el número de PRs
     groups:
-      # Grupo para actualizaciones de Payload CMS
-      payload:
+      # Grupo 1: Payload CMS (TODO junto en 1 PR)
+      payload-ecosystem:
         patterns:
           - '@payloadcms/*'
           - 'payload'
@@ -28,8 +28,8 @@ updates:
           - 'minor'
           - 'patch'
 
-      # Grupo para React y Next.js
-      react-ecosystem:
+      # Grupo 2: React y Next.js (TODO junto en 1 PR)
+      react-nextjs:
         patterns:
           - 'react'
           - 'react-dom'
@@ -40,7 +40,7 @@ updates:
           - 'minor'
           - 'patch'
 
-      # Grupo para AWS/S3
+      # Grupo 3: AWS SDK (TODO junto en 1 PR)
       aws-sdk:
         patterns:
           - '@aws-sdk/*'
@@ -48,7 +48,7 @@ updates:
           - 'minor'
           - 'patch'
 
-      # Grupo para Drizzle y base de datos
+      # Grupo 4: Database (TODO junto en 1 PR)
       database:
         patterns:
           - 'drizzle-kit'
@@ -57,7 +57,7 @@ updates:
           - 'minor'
           - 'patch'
 
-      # Grupo para testing
+      # Grupo 5: Testing (TODO junto en 1 PR)
       testing:
         patterns:
           - 'vitest'
@@ -66,11 +66,12 @@ updates:
           - '@vitejs/*'
           - '@testing-library/*'
           - 'playwright-core'
+          - 'jsdom'
         update-types:
           - 'minor'
           - 'patch'
 
-      # Grupo para linting y formato
+      # Grupo 6: Linting y formato (TODO junto en 1 PR)
       linting:
         patterns:
           - 'eslint'
@@ -81,28 +82,55 @@ updates:
           - 'minor'
           - 'patch'
 
-      # Grupo para dependencias de desarrollo
-      dev-dependencies:
-        dependency-type: 'development'
+      # Grupo 7: TypeScript (TODO junto en 1 PR)
+      typescript:
+        patterns:
+          - 'typescript'
+          - '@types/*'
         update-types:
           - 'minor'
           - 'patch'
 
-    # Límite de PRs abiertos simultáneamente
-    open-pull-requests-limit: 10
+      # Grupo 8: Otras dependencias de producción (TODO junto en 1 PR)
+      production-dependencies:
+        dependency-type: 'production'
+        exclude-patterns:
+          - '@payloadcms/*'
+          - 'payload'
+          - 'react'
+          - 'react-dom'
+          - 'next'
+          - '@aws-sdk/*'
+          - 'drizzle-kit'
+          - '@libsql/*'
+        update-types:
+          - 'minor'
+          - 'patch'
 
-    # Revisor automático (opcional - descomentar y cambiar por tu usuario)
-    # reviewers:
-    #   - "tu-usuario-github"
+      # Grupo 9: Otras dependencias de desarrollo (TODO junto en 1 PR)
+      development-dependencies:
+        dependency-type: 'development'
+        exclude-patterns:
+          - 'vitest'
+          - 'playwright'
+          - '@playwright/*'
+          - 'eslint'
+          - 'eslint-*'
+          - 'prettier'
+          - '@eslint/*'
+          - 'typescript'
+          - '@types/*'
+        update-types:
+          - 'minor'
+          - 'patch'
 
-    # Asignar automáticamente (opcional)
-    # assignees:
-    #   - "tu-usuario-github"
+    # Límite de PRs simultáneos (reducido para evitar spam)
+    open-pull-requests-limit: 5
 
-    # Labels personalizados
-    labels:
-      - 'dependencies'
-      - 'automated'
+    # NO USAR LABELS (eliminar hasta que las crees manualmente)
+    # labels:
+    #   - 'dependencies'
+    #   - 'automated'
 
     # Commit message personalizados
     commit-message:
@@ -128,16 +156,26 @@ updates:
       time: '09:00'
       timezone: 'America/New_York'
 
-    labels:
-      - 'dependencies'
-      - 'github-actions'
-      - 'automated'
+    # Agrupar todas las actions juntas
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+
+    # NO USAR LABELS
+    # labels:
+    #   - 'dependencies'
+    #   - 'github-actions'
+    #   - 'automated'
 
     commit-message:
       prefix: 'ci'
       include: 'scope'
 
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 2
 
     # Solo actualizaciones menores y patches para actions
     ignore:
@@ -153,16 +191,26 @@ updates:
       time: '10:00'
       timezone: 'America/New_York'
 
-    labels:
-      - 'dependencies'
-      - 'docker'
-      - 'automated'
+    # Agrupar todas las imágenes Docker juntas
+    groups:
+      docker-images:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+
+    # NO USAR LABELS
+    # labels:
+    #   - 'dependencies'
+    #   - 'docker'
+    #   - 'automated'
 
     commit-message:
       prefix: 'chore'
       include: 'scope'
 
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 1
 
     # Solo actualizaciones menores para Docker
     ignore:
