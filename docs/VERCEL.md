@@ -306,13 +306,10 @@ Vercel usa Node.js 20 por defecto. Esto ya está configurado en `package.json`:
 ```json
 {
   "engines": {
-    "node": "^18.20.2 ||
-```
-
     "node": "^18.20.2 || >=20.9.0"
-
+  }
 }
-}
+```
 
 ```
 
