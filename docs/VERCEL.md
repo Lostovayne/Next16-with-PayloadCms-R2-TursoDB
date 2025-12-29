@@ -53,18 +53,18 @@ Install Command: pnpm install (detectado automáticamente)
 
 Click en **"Environment Variables"** y agrega:
 
-| Variable | Valor | Entorno |
-|----------|-------|---------|
-| `PAYLOAD_SECRET` | [Generar](#generar-payload_secret) | Production, Preview, Development |
-| `TURSO_DATABASE_URL` | `libsql://tu-db.turso.io` | Production, Preview, Development |
-| `TURSO_AUTH_TOKEN` | Tu token de Turso | Production, Preview, Development |
-| `R2_BUCKET_NAME` | Nombre de tu bucket R2 | Production, Preview, Development |
-| `R2_ACCESS_KEY_ID` | Access Key ID de R2 | Production, Preview, Development |
-| `R2_SECRET_ACCESS_KEY` | Secret Access Key de R2 | Production, Preview, Development |
-| `R2_ENDPOINT` | `https://[account-id].r2.cloudflarestorage.com` | Production, Preview, Development |
-| `NEXT_PUBLIC_SERVER_URL` | `https://tu-proyecto.vercel.app` | Production |
-| `NEXT_PUBLIC_SERVER_URL` | `https://[deployment-url]` | Preview |
-| `LIBSQL_CLIENT` | `web` | Production, Preview, Development |
+| Variable                 | Valor                                           | Entorno                          |
+| ------------------------ | ----------------------------------------------- | -------------------------------- |
+| `PAYLOAD_SECRET`         | [Generar](#generar-payload_secret)              | Production, Preview, Development |
+| `TURSO_DATABASE_URL`     | `libsql://tu-db.turso.io`                       | Production, Preview, Development |
+| `TURSO_AUTH_TOKEN`       | Tu token de Turso                               | Production, Preview, Development |
+| `R2_BUCKET_NAME`         | Nombre de tu bucket R2                          | Production, Preview, Development |
+| `R2_ACCESS_KEY_ID`       | Access Key ID de R2                             | Production, Preview, Development |
+| `R2_SECRET_ACCESS_KEY`   | Secret Access Key de R2                         | Production, Preview, Development |
+| `R2_ENDPOINT`            | `https://[account-id].r2.cloudflarestorage.com` | Production, Preview, Development |
+| `NEXT_PUBLIC_SERVER_URL` | `https://tu-proyecto.vercel.app`                | Production                       |
+| `NEXT_PUBLIC_SERVER_URL` | `https://[deployment-url]`                      | Preview                          |
+| `LIBSQL_CLIENT`          | `web`                                           | Production, Preview, Development |
 
 ### 4. Deploy
 
@@ -77,16 +77,19 @@ Click en **"Deploy"** y espera 2-5 minutos.
 ### Generar PAYLOAD_SECRET
 
 Opción 1 - En tu terminal local:
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
 Opción 2 - En línea:
+
 ```bash
 openssl rand -hex 32
 ```
 
 **Resultado esperado:** Una cadena de 64 caracteres hexadecimales
+
 ```
 23e1ef930586ddfd3e95aa9a1071d03ad543f2d8c24703d320ee4c5d67dbe60b
 ```
@@ -185,6 +188,7 @@ turso db tokens create mi-proyecto-db
 ### Opción 1: Desde Vercel Dashboard (Recomendado)
 
 1. **Importar Proyecto**
+
    ```
    https://vercel.com/new
    → Select repository
@@ -278,4 +282,7 @@ Vercel usa Node.js 20 por defecto. Esto ya está configurado en `package.json`:
 ```json
 {
   "engines": {
-    "node": "^18.20.2 ||
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}
+```

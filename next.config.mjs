@@ -4,7 +4,6 @@ import { withPayload } from '@payloadcms/next/withPayload';
 const nextConfig = {
   // Output standalone para Docker (genera servidor auto-contenido)
   output: 'standalone',
-
   serverExternalPackages: ['@libsql/client', 'libsql', 'better-sqlite3'],
   webpack: (webpackConfig, { isServer }) => {
     webpackConfig.resolve.extensionAlias = {
