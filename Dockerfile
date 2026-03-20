@@ -1,6 +1,6 @@
 # ===================================
 # Multi-Stage Dockerfile Optimizado
-# Payload CMS 3.0 + Next.js 15 + pnpm 10
+# Payload CMS 3.0 + Next.js 16.2 + pnpm 10.32
 # ===================================
 
 # ===================================
@@ -85,15 +85,15 @@ FROM node:20-alpine AS runner
 
 # Instalar solo las dependencias del sistema necesarias
 RUN apk add --no-cache \
-    libc6-compat \
-    curl \
-    && rm -rf /var/cache/apk/*
+  libc6-compat \
+  curl \
+  && rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
 # Configurar usuario no-root por seguridad
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+  adduser --system --uid 1001 nextjs
 
 # Variables de entorno de producción
 ENV NODE_ENV=production
@@ -126,7 +126,7 @@ EXPOSE 3000
 
 # Healthcheck para verificar que el servidor esté corriendo
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD curl -f http://localhost:3000/api/health || exit 1
 
 # Comando para iniciar la aplicación
 CMD ["node", "server.js"]

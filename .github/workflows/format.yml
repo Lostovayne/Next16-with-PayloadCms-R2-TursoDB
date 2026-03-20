@@ -1,6 +1,4 @@
-# 🎨 Auto-format código con Prettier y ESLint
-# Se ejecuta en PRs para formatear y arreglar errores automáticamente
-name: 🎨 Auto Format & Lint
+name: Auto Format & Lint
 
 on:
   push:
@@ -10,15 +8,12 @@ on:
     branches:
       - main
       - develop
-  # Permitir ejecución manual
   workflow_dispatch:
 
-# Cancelar workflows anteriores si hay un nuevo push
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# Permisos necesarios para hacer commit
 permissions:
   contents: write
   pull-requests: write
@@ -28,33 +23,25 @@ jobs:
     name: Format & Lint Fix Code
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Necesario para hacer push de cambios
           token: ${{ secrets.GITHUB_TOKEN }}
-          # Fetch completo para permitir commits
           fetch-depth: 0
-          # En PRs, checkout de la rama del PR
           ref: ${{ github.head_ref || github.ref }}
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
       - name: Setup pnpm cache
         uses: actions/cache@v4
         with:
@@ -62,52 +49,42 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Check if formatting is needed
         id: check
         run: |
-          # Ejecutar Prettier en modo check
           if ! pnpm exec prettier --check .; then
             echo "needs_format=true" >> $GITHUB_OUTPUT
-            echo "❌ Code needs formatting"
+            echo "Code needs formatting"
           else
             echo "needs_format=false" >> $GITHUB_OUTPUT
-            echo "✅ Code is already formatted"
+            echo "Code is already formatted"
           fi
         continue-on-error: true
-
       - name: Format code with Prettier
         if: steps.check.outputs.needs_format == 'true'
         run: |
-          echo "🎨 Formatting code with Prettier..."
+          echo "Formatting code with Prettier"
           pnpm exec prettier --write .
-          echo "✅ Formatting completed"
-
+          echo "Formatting completed"
       - name: Fix lint errors
         if: steps.check.outputs.needs_format == 'true'
         run: |
-          echo "🔧 Fixing lint errors with ESLint..."
+          echo "Fixing lint errors with ESLint"
           pnpm run lint:fix || true
-          echo "✅ Lint fix completed"
-
+          echo "Lint fix completed"
       - name: Check for changes
         if: steps.check.outputs.needs_format == 'true'
         id: git-check
         run: |
           git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
-
       - name: Commit and push changes
         if: steps.git-check.outputs.has_changes == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-
           git add .
-
-          # Commit con mensaje descriptivo
           git commit -m "style: auto-format and lint fix
 
           - Formatted by Prettier
@@ -116,11 +93,8 @@ jobs:
           - Ref: ${{ github.ref }}
 
           [skip ci]"
-
-          # Push changes
           git push
-
-      - name: Comment on PR (if applicable)
+      - name: Comment on PR
         if: github.event_name == 'pull_request' && steps.git-check.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
@@ -130,15 +104,14 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🎨 **Auto-formatted code with Prettier**\n\nYour code has been automatically formatted. Please pull the latest changes:\n\n```bash\ngit pull\n```'
+              body: '**Auto-formatted code with Prettier**\n\nYour code has been automatically formatted. Please pull the latest changes:\n\n```bash\ngit pull\n```'
             })
-
       - name: Summary
         if: always()
         run: |
           if [ "${{ steps.check.outputs.needs_format }}" == "true" ]; then
             if [ "${{ steps.git-check.outputs.has_changes }}" == "true" ]; then
-              echo "### ✅ Code Formatted and Committed" >> $GITHUB_STEP_SUMMARY
+              echo "### Code Formatted and Committed" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
               echo "Your code has been automatically formatted with Prettier." >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
@@ -150,7 +123,7 @@ jobs:
               echo '```' >> $GITHUB_STEP_SUMMARY
             fi
           else
-            echo "### ✅ Code Already Formatted" >> $GITHUB_STEP_SUMMARY
+            echo "### Code Already Formatted" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "No formatting changes needed! 🎉" >> $GITHUB_STEP_SUMMARY
+            echo "No formatting changes needed" >> $GITHUB_STEP_SUMMARY
           fi

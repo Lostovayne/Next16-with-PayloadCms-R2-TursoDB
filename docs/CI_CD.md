@@ -1,8 +1,8 @@
-# 🚀 CI/CD y Automatizaciones con GitHub Actions
+#  CI/CD y Automatizaciones con GitHub Actions
 
 Documentación completa de las automatizaciones configuradas en el proyecto.
 
-## 📋 Tabla de Contenidos
+##  Tabla de Contenidos
 
 - [Resumen de Workflows](#resumen-de-workflows)
 - [Configuración Inicial](#configuración-inicial)
@@ -15,7 +15,7 @@ Documentación completa de las automatizaciones configuradas en el proyecto.
 
 ---
 
-## 📊 Resumen de Workflows
+##  Resumen de Workflows
 
 Este proyecto incluye 4 automatizaciones principales:
 
@@ -28,17 +28,17 @@ Este proyecto incluye 4 automatizaciones principales:
 
 ---
 
-## 🔧 Configuración Inicial
+##  Configuración Inicial
 
 ### 1. Habilitar GitHub Actions
 
 1. Ve a tu repositorio en GitHub
 2. Click en **Settings** → **Actions** → **General**
 3. En "Actions permissions", selecciona:
-   - ✅ **Allow all actions and reusable workflows**
+   -  **Allow all actions and reusable workflows**
 4. En "Workflow permissions", selecciona:
-   - ✅ **Read and write permissions**
-   - ✅ **Allow GitHub Actions to create and approve pull requests**
+   -  **Read and write permissions**
+   -  **Allow GitHub Actions to create and approve pull requests**
 5. Click **Save**
 
 ### 2. Secrets Necesarios (Opcional)
@@ -51,15 +51,15 @@ Settings → Secrets and variables → Actions → New repository secret
 
 | Secret               | Descripción                     | Requerido            |
 | -------------------- | ------------------------------- | -------------------- |
-| `PAYLOAD_SECRET`     | Secret de Payload (para builds) | ❌ No (usa fallback) |
-| `TURSO_DATABASE_URL` | URL de Turso (para builds)      | ❌ No (usa fallback) |
-| `TURSO_AUTH_TOKEN`   | Token de Turso                  | ❌ No (usa fallback) |
+| `PAYLOAD_SECRET`     | Secret de Payload (para builds) |  No (usa fallback) |
+| `TURSO_DATABASE_URL` | URL de Turso (para builds)      |  No (usa fallback) |
+| `TURSO_AUTH_TOKEN`   | Token de Turso                  |  No (usa fallback) |
 
 > **Nota:** Los secrets NO son necesarios para que el CI funcione. El workflow usa valores de prueba por defecto.
 
 ---
 
-## 🤖 Dependabot
+##  Dependabot
 
 ### Configuración
 
@@ -67,13 +67,13 @@ Archivo: `.github/dependabot.yml`
 
 **Características:**
 
-- ✅ Actualizaciones **semanales** (lunes 9:00 AM)
-- ✅ Solo actualizaciones **menores y patches** (no major)
-- ✅ **Agrupación inteligente** de PRs (payload, react, testing, etc.)
-- ✅ **Límite de PRs simultáneos** (máximo 5 para npm, 2 para actions)
-- ✅ Commit messages con formato **Conventional Commits**
+-  Actualizaciones **semanales** (lunes 9:00 AM)
+-  Solo actualizaciones **menores y patches** (no major)
+-  **Agrupación inteligente** de PRs (payload, react, testing, etc.)
+-  **Límite de PRs simultáneos** (máximo 5 para npm, 2 para actions)
+-  Commit messages con formato **Conventional Commits**
 
-### ⚠️ Configuración Inicial Requerida: Labels
+###  Configuración Inicial Requerida: Labels
 
 <<<<<<< HEAD
 Antes de usar Dependabot, **debes crear las labels en GitHub**:
@@ -110,7 +110,7 @@ dev-dependencies: # Todas las devDependencies
 
 **Luego descomenta las líneas de `labels:` en `.github/dependabot.yml`**
 
-📖 Ver guía completa: [GITHUB_LABELS.md](./GITHUB_LABELS.md)
+ Ver guía completa: [GITHUB_LABELS.md](./GITHUB_LABELS.md)
 
 ### Grupos de Actualización (Reduce PRs)
 
@@ -128,7 +128,7 @@ El proyecto agrupa actualizaciones inteligentemente para **reducir el número de
 | `production-dependencies`  | Otras deps de producción                      | **1 PR** agrupado                              |
 | `development-dependencies` | Otras deps de desarrollo                      | **1 PR** agrupado                              |
 
-**Resultado:** En lugar de 20+ PRs individuales, obtienes **~9 PRs agrupados** 🎉
+**Resultado:** En lugar de 20+ PRs individuales, obtienes **~9 PRs agrupados** 
 
 ### Personalizar Dependabot
 
@@ -145,7 +145,7 @@ schedule:
 # Cambiar límite de PRs (recomendado: 3-5)
 open-pull-requests-limit: 5 # Reducido para evitar spam
 
-# ⚠️ IMPORTANTE: Manejo de actualizaciones major
+#  IMPORTANTE: Manejo de actualizaciones major
 # En lugar de bloquear TODO con '*', listar paquetes específicos
 ignore:
   # Bloquear major updates para paquetes específicos
@@ -155,7 +155,7 @@ ignore:
     update-types: ['version-update:semver-major']
   # ... otros paquetes
 
-  # ✅ NOTA: @payloadcms/* y payload NO están en ignore
+  #  NOTA: @payloadcms/* y payload NO están en ignore
   # Esto permite actualizaciones major porque todos los paquetes
   # de Payload deben tener la misma versión
 
@@ -172,7 +172,7 @@ groups:
       - 'patch'
 ```
 
-### 💡 Mejores Prácticas de Agrupación
+###  Mejores Prácticas de Agrupación
 
 1. **Agrupa por ecosistema** (React, AWS, Testing, **Payload**)
 2. **Separa prod vs dev** dependencies
@@ -181,7 +181,7 @@ groups:
 5. **Excepciones para paquetes que deben actualizarse juntos** (como Payload)
 6. **Usa nombres descriptivos** para los grupos
 
-### ⚠️ Configuración Especial: Payload CMS
+###  Configuración Especial: Payload CMS
 
 **Problema:** Payload requiere que TODOS los paquetes `@payloadcms/*` y `payload` tengan la misma versión exacta.
 
@@ -202,8 +202,8 @@ groups:
    ```
 
 2. **NO incluir Payload en la lista `ignore`:**
-   - ✅ Correcto: Listar paquetes específicos en `ignore` (react, next, etc.)
-   - ❌ Incorrecto: Usar `dependency-name: '*'` (bloquearía todo)
+   -  Correcto: Listar paquetes específicos en `ignore` (react, next, etc.)
+   -  Incorrecto: Usar `dependency-name: '*'` (bloquearía todo)
 
 3. **Auto-merge configurado** para reconocer actualizaciones de Payload y permitir major versions
 
@@ -211,7 +211,7 @@ groups:
 
 ---
 
-## 🔄 CI/CD Pipeline
+##  CI/CD Pipeline
 
 ### Archivo: `.github/workflows/ci.yml`
 
@@ -219,35 +219,35 @@ Este workflow se ejecuta en cada push o PR a `main` o `develop`.
 
 ### Jobs Configurados
 
-#### 1️⃣ Lint & Type Check
+#### 1⃣ Lint & Type Check
 
 ```yaml
-✅ ESLint
-✅ TypeScript type checking
-✅ Payload types generation
+ ESLint
+ TypeScript type checking
+ Payload types generation
 ```
 
-#### 2️⃣ Build
+#### 2⃣ Build
 
 ```yaml
-✅ pnpm build
-✅ Verifica que el proyecto compile correctamente
-✅ Muestra el tamaño del build
+ pnpm build
+ Verifica que el proyecto compile correctamente
+ Muestra el tamaño del build
 ```
 
-#### 3️⃣ Security Audit
+#### 3⃣ Security Audit
 
 ```yaml
-✅ pnpm audit
-✅ Verifica vulnerabilidades de seguridad
-✅ No falla el CI (solo advertencias)
+ pnpm audit
+ Verifica vulnerabilidades de seguridad
+ No falla el CI (solo advertencias)
 ```
 
-#### 4️⃣ Tests (COMENTADO)
+#### 4⃣ Tests (COMENTADO)
 
 ```yaml
-❌ Tests de integración (Vitest) - DESACTIVADO
-❌ Tests E2E (Playwright) - DESACTIVADO
+ Tests de integración (Vitest) - DESACTIVADO
+ Tests E2E (Playwright) - DESACTIVADO
 # Para activar, descomenta las secciones en ci.yml
 ```
 
@@ -292,7 +292,7 @@ Cuando tengas tests implementados:
 
 ---
 
-## 🎨 Auto-Format
+##  Auto-Format
 
 ### Archivo: `.github/workflows/format.yml`
 
@@ -359,7 +359,7 @@ on:
 
 ---
 
-## 🔀 Auto-Merge de Dependabot
+##  Auto-Merge de Dependabot
 
 ### Archivo: `.github/workflows/dependabot-automerge.yml`
 
@@ -373,23 +373,23 @@ Aprueba y hace merge automático de PRs de Dependabot para actualizaciones menor
 2. Workflow detecta tipo de actualización
    ↓
 3. Si es minor/patch:
-   ├─> ✅ Auto-aprueba el PR
-   ├─> 🔄 Espera a que pasen los CI checks
-   └─> 🎯 Hace merge automático
+   ├─>  Auto-aprueba el PR
+   ├─>  Espera a que pasen los CI checks
+   └─>  Hace merge automático
 
 4. Si es major:
-   ├─> ⚠️ Agrega label "needs-review"
-   ├─> 💬 Comenta en el PR
-   └─> ⏸️ Requiere aprobación manual
+   ├─>  Agrega label "needs-review"
+   ├─>  Comenta en el PR
+   └─> ⏸ Requiere aprobación manual
 ```
 
 ### Tipos de Actualización
 
 | Tipo      | Auto-merge | Ejemplo         |
 | --------- | ---------- | --------------- |
-| **Patch** | ✅ Sí      | `1.0.0 → 1.0.1` |
-| **Minor** | ✅ Sí      | `1.0.0 → 1.1.0` |
-| **Major** | ❌ No      | `1.0.0 → 2.0.0` |
+| **Patch** |  Sí      | `1.0.0 → 1.0.1` |
+| **Minor** |  Sí      | `1.0.0 → 1.1.0` |
+| **Major** |  No      | `1.0.0 → 2.0.0` |
 
 ### Personalizar Auto-Merge
 
@@ -421,7 +421,7 @@ if: false && github.actor == 'dependabot[bot]'
 
 ---
 
-## ⚙️ Activar/Desactivar Workflows
+## ⚙ Activar/Desactivar Workflows
 
 ### Desactivar un Workflow Temporalmente
 
@@ -476,9 +476,9 @@ on:
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
-### ❌ CI falla con "PAYLOAD_SECRET is required"
+###  CI falla con "PAYLOAD_SECRET is required"
 
 **Solución:**
 
@@ -488,7 +488,7 @@ El CI usa valores de prueba por defecto. Si quieres usar tus propios valores:
 2. Agrega `PAYLOAD_SECRET` con un valor de al menos 32 caracteres
 3. Opcionalmente agrega `TURSO_DATABASE_URL` y `TURSO_AUTH_TOKEN`
 
-### ❌ Auto-format no está haciendo commit
+###  Auto-format no está haciendo commit
 
 **Posibles causas:**
 
@@ -500,7 +500,7 @@ El CI usa valores de prueba por defecto. Si quieres usar tus propios valores:
    - Settings → Branches → Branch protection rules
    - Desactiva "Require pull request reviews before merging" para `github-actions[bot]`
 
-### ❌ Dependabot auto-merge no funciona
+###  Dependabot auto-merge no funciona
 
 **Verifica:**
 
@@ -520,7 +520,7 @@ El CI usa valores de prueba por defecto. Si quieres usar tus propios valores:
    - Solo minor y patch se auto-mergen
    - Major updates requieren revisión manual
 
-### ❌ Build falla con error de memoria
+###  Build falla con error de memoria
 
 **Solución:**
 
@@ -533,7 +533,7 @@ Aumenta memoria en el workflow:
     NODE_OPTIONS: '--max-old-space-size=8000'
 ```
 
-### ❌ pnpm install falla
+###  pnpm install falla
 
 **Solución:**
 
@@ -544,7 +544,7 @@ with:
   version: 10
 ```
 
-### ❌ Cache path validation error
+###  Cache path validation error
 
 **Error:**
 
@@ -582,7 +582,7 @@ Error: Path Validation Error: Path(s) specified in the action for caching do(es)
 
 Este proyecto ya usa esta configuración en todos los workflows.
 
-### ❌ Múltiples workflows ejecutándose en paralelo
+###  Múltiples workflows ejecutándose en paralelo
 
 **Problema:** Al hacer varios push rápidos, se ejecutan múltiples CI simultáneamente.
 
@@ -608,7 +608,7 @@ concurrency:
 
 ---
 
-## 📊 Badges para README
+##  Badges para README
 
 Agrega badges a tu README para mostrar el estado:
 
@@ -619,25 +619,25 @@ Agrega badges a tu README para mostrar el estado:
 
 ---
 
-## 🎯 Mejores Prácticas
+##  Mejores Prácticas
 
-### ✅ DO
+###  DO
 
-- ✅ Usa `pnpm install --frozen-lockfile` en CI
-- ✅ Cachea node_modules con `cache: 'pnpm'`
-- ✅ Usa `pull_request_target` para workflows que necesitan write permissions en PRs externos
-- ✅ Limita timeouts con `timeout-minutes`
-- ✅ Usa `continue-on-error: true` para checks opcionales
-- ✅ Agrega `[skip ci]` en commits automáticos para evitar loops
+-  Usa `pnpm install --frozen-lockfile` en CI
+-  Cachea node_modules con `cache: 'pnpm'`
+-  Usa `pull_request_target` para workflows que necesitan write permissions en PRs externos
+-  Limita timeouts con `timeout-minutes`
+-  Usa `continue-on-error: true` para checks opcionales
+-  Agrega `[skip ci]` en commits automáticos para evitar loops
 
-### ❌ DON'T
+###  DON'T
 
-- ❌ No expongas secrets en logs
-- ❌ No uses `pull_request` + `write` permissions (usa `pull_request_target`)
-- ❌ No hagas auto-merge de major updates sin revisar
-- ❌ No ejecutes workflows en todas las ramas (limita a main/develop)
+-  No expongas secrets en logs
+-  No uses `pull_request` + `write` permissions (usa `pull_request_target`)
+-  No hagas auto-merge de major updates sin revisar
+-  No ejecutes workflows en todas las ramas (limita a main/develop)
 
-### ❌ Workflow no se cancela cuando hago nuevo push
+###  Workflow no se cancela cuando hago nuevo push
 
 **Verifica que el workflow tenga:**
 
@@ -657,7 +657,7 @@ concurrency:
 
 ---
 
-## ⚡ Concurrencia de Workflows
+##  Concurrencia de Workflows
 
 ### Configuración de Concurrencia
 
@@ -671,10 +671,10 @@ concurrency:
 
 **Beneficios:**
 
-- ✅ Solo se ejecuta el workflow más reciente
-- ✅ Cancela automáticamente los anteriores
-- ✅ Ahorra minutos de GitHub Actions
-- ✅ Resultados más rápidos
+-  Solo se ejecuta el workflow más reciente
+-  Cancela automáticamente los anteriores
+-  Ahorra minutos de GitHub Actions
+-  Resultados más rápidos
 
 **Grupos de concurrencia:**
 
@@ -689,9 +689,9 @@ concurrency:
 
 ```
 Push 1 → CI empieza (commit abc123)
-Push 2 → CI empieza (commit def456), cancela anterior ❌
-Push 3 → CI empieza (commit ghi789), cancela anterior ❌
-         Solo el último (ghi789) se completa ✅
+Push 2 → CI empieza (commit def456), cancela anterior 
+Push 3 → CI empieza (commit ghi789), cancela anterior 
+         Solo el último (ghi789) se completa 
 ```
 
 ### Personalizar Concurrencia
@@ -713,7 +713,7 @@ concurrency:
 
 ---
 
-## 🏷️ Gestión de Labels
+##  Gestión de Labels
 
 ### Problema Común: "Labels not found"
 
@@ -744,7 +744,7 @@ gh label create "automated" --description "Automated PRs" --color "7057ff"
 
 ---
 
-## 📚 Recursos
+##  Recursos
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Dependabot Configuration](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
@@ -754,7 +754,7 @@ gh label create "automated" --description "Automated PRs" --color "7057ff"
 
 ---
 
-## 🔄 Actualizar este Documento
+##  Actualizar este Documento
 
 Este documento se actualiza junto con los workflows. Si modificas `.github/workflows/`, actualiza esta documentación.
 
@@ -763,3 +763,6 @@ Este documento se actualiza junto con los workflows. Si modificas `.github/workf
 ---
 
 **¿Tienes dudas?** Abre un issue o consulta la [documentación oficial de GitHub Actions](https://docs.github.com/en/actions).
+
+
+

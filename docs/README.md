@@ -1,30 +1,32 @@
-# 📚 Documentación del Proyecto
+# Documentación del Proyecto
 
-Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turso + Cloudflare R2**.
+Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 16 + Turso + Cloudflare R2**.
 
-## 🗺️ Índice de Documentación
+Gestor de paquetes por defecto: **pnpm**.
+
+## Índice de Documentación
 
 ### Para Usuarios
 
-| Documento                                   | Descripción                                                | Tiempo de lectura |
-| ------------------------------------------- | ---------------------------------------------------------- | ----------------- |
-| **[⚡ QUICKSTART.md](./QUICKSTART.md)**     | Guía rápida de inicio - Configura el proyecto en 5 minutos | ⏱️ 5 min          |
-| **[🛠️ DEVELOPMENT.md](./DEVELOPMENT.md)**   | Guía completa de desarrollo y extensión del proyecto       | ⏱️ 20 min         |
-| **[📜 COMMANDS.md](./COMMANDS.md)**         | Referencia completa de todos los comandos disponibles      | ⏱️ 15 min         |
-| **[🏗️ ARCHITECTURE.md](./ARCHITECTURE.md)** | Arquitectura técnica del proyecto con diagramas            | ⏱️ 15 min         |
-| **[🚀 CI_CD.md](./CI_CD.md)**               | GitHub Actions, Dependabot y automatizaciones              | ⏱️ 10 min         |
+| Documento                                 | Descripción                                                | Tiempo de lectura |
+| ----------------------------------------- | ---------------------------------------------------------- | ----------------- |
+| **[ QUICKSTART.md](./QUICKSTART.md)**     | Guía rápida de inicio - Configura el proyecto en 5 minutos | 5 min             |
+| **[ DEVELOPMENT.md](./DEVELOPMENT.md)**   | Guía completa de desarrollo y extensión del proyecto       | 20 min            |
+| **[ COMMANDS.md](./COMMANDS.md)**         | Referencia completa de todos los comandos disponibles      | 15 min            |
+| **[ ARCHITECTURE.md](./ARCHITECTURE.md)** | Arquitectura técnica del proyecto con diagramas            | 15 min            |
+| **[ CI_CD.md](./CI_CD.md)**               | GitHub Actions, Dependabot y automatizaciones              | 10 min            |
 
 ### Para Contribuidores
 
-| Documento                                   | Descripción                      | Tiempo de lectura |
-| ------------------------------------------- | -------------------------------- | ----------------- |
-| **[🤝 CONTRIBUTING.md](./CONTRIBUTING.md)** | Guía para contribuir al proyecto | ⏱️ 10 min         |
+| Documento                                 | Descripción                      | Tiempo de lectura |
+| ----------------------------------------- | -------------------------------- | ----------------- |
+| **[ CONTRIBUTING.md](./CONTRIBUTING.md)** | Guía para contribuir al proyecto | 10 min            |
 
 ---
 
-## 🎯 ¿Por Dónde Empezar?
+## ¿Por Dónde Empezar?
 
-### 🆕 Si es tu primera vez:
+### Si es tu primera vez:
 
 1. **[Lee el README principal](../README.md)** para entender qué es el proyecto
 2. **[Sigue QUICKSTART.md](./QUICKSTART.md)** para configurar todo en 5 minutos
@@ -32,7 +34,7 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 4. **[Revisa ARCHITECTURE.md](./ARCHITECTURE.md)** para entender cómo funciona todo internamente
 5. **[Configura CI/CD.md](./CI_CD.md)** para habilitar GitHub Actions y automatizaciones
 
-### 👨‍💻 Si ya tienes el proyecto corriendo:
+### ‍ Si ya tienes el proyecto corriendo:
 
 1. **[DEVELOPMENT.md](./DEVELOPMENT.md)** - Aprende a crear colecciones, campos y personalizar
 2. **[COMMANDS.md](./COMMANDS.md)** - Consulta todos los comandos disponibles
@@ -40,7 +42,7 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 4. **[CI_CD.md](./CI_CD.md)** - Configura automatizaciones con GitHub Actions
 5. **[README principal](../README.md)** - Referencia para despliegue y troubleshooting
 
-### 🤝 Si quieres contribuir:
+### Si quieres contribuir:
 
 1. **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Lee las guías de contribución
 2. **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Entiende la arquitectura del proyecto
@@ -49,20 +51,20 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-## 📖 Resumen de Cada Documento
+## Resumen de Cada Documento
 
-### ⚡ QUICKSTART.md
+### QUICKSTART.md
 
 **Objetivo:** Tener el proyecto corriendo en 5 minutos.
 
 **Contenido:**
 
-- ✅ Instalación rápida
-- ✅ Configuración de Turso Database (paso a paso)
-- ✅ Configuración de Cloudflare R2 (paso a paso)
-- ✅ Variables de entorno explicadas
-- ✅ Primeros pasos después de iniciar
-- ✅ Solución rápida de problemas comunes
+- Instalación rápida
+- Configuración de Turso Database (paso a paso)
+- Configuración de Cloudflare R2 (paso a paso)
+- Variables de entorno explicadas
+- Primeros pasos después de iniciar
+- Solución rápida de problemas comunes
 
 **¿Cuándo leerlo?**
 
@@ -72,22 +74,22 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-### 🛠️ DEVELOPMENT.md
+### DEVELOPMENT.md
 
 **Objetivo:** Aprender a desarrollar y extender el proyecto.
 
 **Contenido:**
 
-- 🏗️ Arquitectura del proyecto
-- 📝 Crear nuevas colecciones
-- 🎨 Configuración de campos (todos los tipos)
-- 🪝 Hooks y validación personalizada
-- 🔗 Relaciones entre colecciones
-- 🔐 Control de acceso y permisos
-- 🎨 Personalizar el Admin Panel
-- 🌐 API y endpoints personalizados
-- 🗄️ Migraciones de base de datos
-- 🧪 Testing
+- Arquitectura del proyecto
+- Crear nuevas colecciones
+- Configuración de campos (todos los tipos)
+- Hooks y validación personalizada
+- Relaciones entre colecciones
+- Control de acceso y permisos
+- Personalizar el Admin Panel
+- API y endpoints personalizados
+- Migraciones de base de datos
+- Testing
 
 **¿Cuándo leerlo?**
 
@@ -98,21 +100,21 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-### 📜 COMMANDS.md
+### COMMANDS.md
 
 **Objetivo:** Referencia completa de todos los comandos.
 
 **Contenido:**
 
-- 🔧 Comandos de desarrollo (`pnpm dev`, `pnpm devsafe`)
-- 🏗️ Comandos de build y producción
-- 🎯 Comandos de Payload CMS (migrate, generate, etc.)
-- 🧪 Comandos de testing (Vitest, Playwright)
-- 🗄️ Comandos de base de datos (Drizzle, Turso)
-- ✨ Comandos de linting y formato
-- 🐳 Comandos de Docker
-- 🔍 Comandos de diagnóstico
-- 📝 Flujos de trabajo típicos
+- Comandos de desarrollo (`pnpm dev`, `pnpm devsafe`)
+- Comandos de build y producción
+- Comandos de Payload CMS (migrate, generate, etc.)
+- Comandos de testing (Vitest, Playwright)
+- Comandos de base de datos (Drizzle, Turso)
+- Comandos de linting y formato
+- Comandos de Docker
+- Comandos de diagnóstico
+- Flujos de trabajo típicos
 
 **¿Cuándo leerlo?**
 
@@ -123,21 +125,21 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-### 🏗️ ARCHITECTURE.md
+### ARCHITECTURE.md
 
 **Objetivo:** Entender la arquitectura técnica del proyecto.
 
 **Contenido:**
 
-- 🏗️ Diagramas de arquitectura
-- 🔄 Flujos de datos (creación, consumo, uploads)
-- 🧩 Componentes principales
-- 💻 Stack tecnológico detallado
-- 🤔 Decisiones de arquitectura (por qué cada tecnología)
-- 🔐 Seguridad y autenticación
-- 📊 Escalabilidad y performance
-- 🧪 Estrategia de testing
-- 🚀 Pipeline de deploy
+- Diagramas de arquitectura
+- Flujos de datos (creación, consumo, uploads)
+- Componentes principales
+- Stack tecnológico detallado
+- Decisiones de arquitectura (por qué cada tecnología)
+- Seguridad y autenticación
+- Escalabilidad y performance
+- Estrategia de testing
+- Pipeline de deploy
 
 **¿Cuándo leerlo?**
 
@@ -149,21 +151,21 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-### 🤝 CONTRIBUTING.md
+### CONTRIBUTING.md
 
 **Objetivo:** Guiar a los contribuidores del proyecto.
 
 **Contenido:**
 
-- 📜 Código de conducta
-- 🚀 Proceso de contribución paso a paso
-- 💻 Flujo de desarrollo
-- 📏 Estándares de código (TypeScript, ESLint, Prettier)
-- 📝 Formato de commits (Conventional Commits)
-- 🐛 Cómo reportar bugs
-- 💡 Cómo sugerir mejoras
-- 🧪 Cómo agregar tests
-- ✅ Checklist antes de hacer PR
+- Código de conducta
+- Proceso de contribución paso a paso
+- Flujo de desarrollo
+- Estándares de código (TypeScript, ESLint, Prettier)
+- Formato de commits (Conventional Commits)
+- Cómo reportar bugs
+- Cómo sugerir mejoras
+- Cómo agregar tests
+- Checklist antes de hacer PR
 
 **¿Cuándo leerlo?**
 
@@ -174,18 +176,18 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-### 🚀 CI_CD.md
+### CI_CD.md
 
 **Objetivo:** Configurar GitHub Actions y automatizaciones.
 
 **Contenido:**
 
-- 🤖 Configuración de Dependabot
-- 🔄 CI/CD Pipeline (linting, build, tests)
-- 🎨 Auto-format con Prettier
-- 🔀 Auto-merge de actualizaciones menores
-- ⚙️ Personalización de workflows
-- 🐛 Troubleshooting de Actions
+- Configuración de Dependabot
+- CI/CD Pipeline (linting, build, tests)
+- Auto-format con Prettier
+- Auto-merge de actualizaciones menores
+- ⚙ Personalización de workflows
+- Troubleshooting de Actions
 
 **¿Cuándo leerlo?**
 
@@ -197,7 +199,7 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-## 🔍 Buscar Información Rápida
+## Buscar Información Rápida
 
 ### Configuración Inicial
 
@@ -244,9 +246,9 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-## 🎓 Rutas de Aprendizaje
+## Rutas de Aprendizaje
 
-### 🌱 Principiante
+### Principiante
 
 ```
 1. README.md (entender el proyecto)
@@ -258,7 +260,7 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 4. DEVELOPMENT.md - Sección de Campos (entender opciones)
 ```
 
-### 🚀 Intermedio
+### Intermedio
 
 ```
 1. DEVELOPMENT.md - Crear Colecciones
@@ -274,7 +276,7 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 6. COMMANDS.md - Migraciones
 ```
 
-### 💪 Avanzado
+### Avanzado
 
 ```
 1. ARCHITECTURE.md - Vista completa del sistema
@@ -292,15 +294,15 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-## 📱 Acceso Rápido
+## Acceso Rápido
 
 ### Enlaces Importantes
 
-- **[🏠 README Principal](../README.md)** - Volver al inicio
-- **[📦 package.json](../package.json)** - Ver dependencias y scripts
-- **[⚙️ payload.config.ts](../src/payload.config.ts)** - Configuración principal
-- **[📋 .env.example](../.env.example)** - Plantilla de variables de entorno
-- **[🔧 .github/workflows/](../.github/workflows/)** - GitHub Actions workflows
+- **[ README Principal](../README.md)** - Volver al inicio
+- **[ package.json](../package.json)** - Ver dependencias y scripts
+- **[⚙ payload.config.ts](../src/payload.config.ts)** - Configuración principal
+- **[ .env.example](../.env.example)** - Plantilla de variables de entorno
+- **[ .github/workflows/](../.github/workflows/)** - GitHub Actions workflows
 
 ### Recursos Externos
 
@@ -311,19 +313,19 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-## 💡 Consejos
+## Consejos
 
-> 💡 **Tip:** Usa `Ctrl/Cmd + F` para buscar palabras clave en cada documento.
+> **Tip:** Usa `Ctrl/Cmd + F` para buscar palabras clave en cada documento.
 
-> 💡 **Tip:** Todos los documentos tienen tabla de contenidos con enlaces directos.
+> **Tip:** Todos los documentos tienen tabla de contenidos con enlaces directos.
 
-> 💡 **Tip:** Los ejemplos de código incluyen comentarios explicativos.
+> **Tip:** Los ejemplos de código incluyen comentarios explicativos.
 
-> 💡 **Tip:** Si algo no está claro, abre un Issue para mejorar la documentación.
+> **Tip:** Si algo no está claro, abre un Issue para mejorar la documentación.
 
 ---
 
-## 🆘 ¿Aún Tienes Dudas?
+## ¿Aún Tienes Dudas?
 
 1. **Busca en la documentación:** Usa `Ctrl/Cmd + F` en cada archivo
 2. **Revisa los ejemplos:** Todos los documentos incluyen código de ejemplo
@@ -334,6 +336,6 @@ Bienvenido a la documentación completa de **Payload CMS 3.0 + Next.js 15 + Turs
 
 ---
 
-**¡Feliz desarrollo! 🚀**
+**¡Feliz desarrollo! **
 
 ¿Encontraste útil esta documentación? ⭐ Dale una estrella al proyecto.

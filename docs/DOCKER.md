@@ -1,8 +1,8 @@
-# 🐳 Guía Completa de Docker
+# Guía Completa de Docker
 
 Documentación completa para construir, ejecutar y desplegar el proyecto usando Docker.
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Introducción](#introducción)
 - [Prerequisitos](#prerequisitos)
@@ -16,16 +16,16 @@ Documentación completa para construir, ejecutar y desplegar el proyecto usando 
 
 ---
 
-## 🎯 Introducción
+## Introducción
 
 Este proyecto incluye:
 
-- ✅ **Dockerfile multi-stage** optimizado con cache layers
-- ✅ **GitHub Actions** para build y publicación automática
-- ✅ **GitHub Container Registry (GHCR)** para almacenar imágenes
-- ✅ **docker-compose.yml** para desarrollo y producción
-- ✅ **Health checks** integrados
-- ✅ **Optimización de tamaño** (imagen final ~200-300MB)
+- **Dockerfile multi-stage** optimizado con cache layers
+- **GitHub Actions** para build y publicación automática
+- **GitHub Container Registry (GHCR)** para almacenar imágenes
+- **docker-compose.yml** para desarrollo y producción
+- **Health checks** integrados
+- **Optimización de tamaño** (imagen final ~200-300MB)
 
 ### Arquitectura Multi-Stage
 
@@ -41,7 +41,7 @@ Stage 4: runner     → Imagen final optimizada (solo runtime)
 
 ---
 
-## 📦 Prerequisitos
+## Prerequisitos
 
 ### Software Necesario
 
@@ -77,7 +77,7 @@ NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
 ---
 
-## 🔨 Construcción Local
+## Construcción Local
 
 ### Build de Imagen
 
@@ -156,17 +156,17 @@ docker image prune -a
 
 ---
 
-## 📥 Usar Imagen de GitHub
+## Usar Imagen de GitHub
 
 ### Pull de GHCR
 
 **Política de Publicación:**
 
-- ✅ **main**: Construye y publica a GHCR (producción)
-- 🔧 **PRs**: Solo construye para validar (NO publica)
-- ⚠️ **develop**: NO ejecuta el workflow de Docker
+- **main**: Construye y publica a GHCR (producción)
+- **PRs**: Solo construye para validar (NO publica)
+- **develop**: NO ejecuta el workflow de Docker
 
-**⚠️ Nota importante:** Los nombres de imágenes en Docker/GHCR deben estar en **minúsculas**. El workflow convierte automáticamente `github.repository` a minúsculas.
+** Nota importante:** Los nombres de imágenes en Docker/GHCR deben estar en **minúsculas**. El workflow convierte automáticamente `github.repository` a minúsculas.
 
 Cuando haces push a `main`, GitHub Actions automáticamente:
 
@@ -221,7 +221,7 @@ GitHub Actions genera automáticamente estos tags (en minúsculas):
 
 ---
 
-## 🔐 Variables de Entorno
+## Variables de Entorno
 
 ### Variables Requeridas
 
@@ -280,7 +280,7 @@ NEXT_PUBLIC_SERVER_URL=https://your-domain.com
 
 ---
 
-## 🚀 Docker Compose
+## Docker Compose
 
 ### Desarrollo
 
@@ -352,19 +352,16 @@ docker-compose config
 
 ---
 
-## 🌐 Despliegue en Producción
+## Despliegue en Producción
 
 ### Railway
 
 ```bash
-# 1. Instalar Railway CLI
-npm install -g @railway/cli
+# 1. Login con Railway CLI (pnpm)
+pnpm dlx @railway/cli login
 
-# 2. Login
-railway login
-
-# 3. Crear nuevo proyecto
-railway init
+# 2. Crear nuevo proyecto
+pnpm dlx @railway/cli init
 
 # 4. Configurar variables de entorno
 railway variables set PAYLOAD_SECRET=tu_secreto
@@ -541,7 +538,7 @@ sudo certbot --nginx -d tu-dominio.com
 
 ---
 
-## ⚡ Optimizaciones
+## Optimizaciones
 
 ### Tamaño de Imagen
 
@@ -610,7 +607,7 @@ docker buildx build \
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Contenedor no inicia
 
@@ -711,7 +708,7 @@ docker push ghcr.io/tu-usuario/tu-repo:latest
 
 ---
 
-## 📊 Monitoreo
+## Monitoreo
 
 ### Health Check Manual
 
@@ -763,7 +760,7 @@ docker top payload-app
 
 ---
 
-## 🔄 Actualización
+## Actualización
 
 ### Actualizar a Nueva Versión
 
@@ -808,7 +805,7 @@ docker run -d \
 
 ---
 
-## 📚 Recursos
+## Recursos
 
 - [Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
@@ -817,7 +814,7 @@ docker run -d \
 
 ---
 
-## ✅ Checklist de Producción
+## Checklist de Producción
 
 Antes de desplegar en producción:
 
@@ -837,4 +834,4 @@ Antes de desplegar en producción:
 
 **¿Problemas?** Revisa la sección de [Troubleshooting](#-troubleshooting) o abre un issue.
 
-**¡Listo para deploy! 🚀**
+**¡Listo para deploy! **

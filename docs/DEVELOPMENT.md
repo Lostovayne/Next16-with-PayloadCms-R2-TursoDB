@@ -1,8 +1,8 @@
-# 🛠️ Guía de Desarrollo y Extensión
+# Guía de Desarrollo y Extensión
 
 Esta guía te ayudará a entender la arquitectura del proyecto y cómo extenderlo con nuevas funcionalidades.
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Arquitectura del Proyecto](#arquitectura-del-proyecto)
 - [Crear Nuevas Colecciones](#crear-nuevas-colecciones)
@@ -14,7 +14,7 @@ Esta guía te ayudará a entender la arquitectura del proyecto y cómo extenderl
 - [API y Endpoints](#api-y-endpoints)
 - [Migraciones de Base de Datos](#migraciones-de-base-de-datos)
 
-## 🏗️ Arquitectura del Proyecto
+## Arquitectura del Proyecto
 
 ```
 mi-proyecto-2025/
@@ -39,7 +39,7 @@ mi-proyecto-2025/
 │   └── payload-types.ts        # Tipos generados automáticamente
 ```
 
-## 📝 Crear Nuevas Colecciones
+## Crear Nuevas Colecciones
 
 ### Paso 1: Crear el archivo de la colección
 
@@ -200,7 +200,7 @@ pnpm generate:types
 pnpm payload migrate
 ```
 
-## 🎨 Configuración de Campos
+## Configuración de Campos
 
 ### Tipos de Campos Comunes
 
@@ -335,7 +335,7 @@ pnpm payload migrate
 }
 ```
 
-## 🪝 Hooks y Validación
+## Hooks y Validación
 
 ### Hooks de Campo
 
@@ -438,7 +438,7 @@ export const Posts: CollectionConfig = {
 }
 ```
 
-## 🔗 Relaciones entre Colecciones
+## Relaciones entre Colecciones
 
 ### Relación Simple (hasOne)
 
@@ -512,7 +512,7 @@ export const Comments: CollectionConfig = {
 };
 ```
 
-## 🔐 Control de Acceso
+## Control de Acceso
 
 ### Nivel de Colección
 
@@ -590,7 +590,7 @@ export const Users: CollectionConfig = {
 };
 ```
 
-## 🎨 Personalizar el Admin Panel
+## Personalizar el Admin Panel
 
 ### Configuración del Admin
 
@@ -637,7 +637,7 @@ export const Posts: CollectionConfig = {
 };
 ```
 
-## 🌐 API y Endpoints
+## API y Endpoints
 
 ### Endpoints Automáticos
 
@@ -697,7 +697,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-## 🗄️ Migraciones de Base de Datos
+## Migraciones de Base de Datos
 
 ### Crear una Migración
 
@@ -737,7 +737,7 @@ npx drizzle-kit generate
 npx drizzle-kit push
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Test de Integración
 
@@ -766,7 +766,7 @@ describe('Posts Collection', () => {
 });
 ```
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Error: Mismatching Payload dependency versions
 
@@ -825,7 +825,7 @@ Si necesitas actualizar Payload manualmente:
 pnpm update @payloadcms/db-sqlite @payloadcms/next @payloadcms/richtext-lexical @payloadcms/storage-s3 @payloadcms/ui payload
 
 # O especificar una versión exacta
-pnpm add @payloadcms/db-sqlite@3.68.5 @payloadcms/next@3.68.5 @payloadcms/richtext-lexical@3.68.5 @payloadcms/storage-s3@3.68.5 @payloadcms/ui@3.68.5 payload@3.68.5
+pnpm add @payloadcms/db-sqlite@3.69.0 @payloadcms/next@3.69.0 @payloadcms/richtext-lexical@3.69.0 @payloadcms/storage-s3@3.69.0 @payloadcms/ui@3.69.0 payload@3.69.0
 ```
 
 ### Error: Database connection issues
@@ -867,7 +867,7 @@ El proyecto ya está configurado con agrupación de dependencias en `.github/dep
 2. Reduce `open-pull-requests-limit`
 3. Cambia el intervalo de actualización de `weekly` a `monthly`
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 - [Payload Collections](https://payloadcms.com/docs/configuration/collections)
 - [Payload Fields](https://payloadcms.com/docs/fields/overview)
@@ -876,4 +876,4 @@ El proyecto ya está configurado con agrupación de dependencias en `.github/dep
 
 ---
 
-**¡Feliz desarrollo! 🚀** Si tienes preguntas, consulta la [documentación oficial](https://payloadcms.com/docs) o abre un issue.
+**¡Feliz desarrollo! ** Si tienes preguntas, consulta la [documentación oficial](https://payloadcms.com/docs) o abre un issue.

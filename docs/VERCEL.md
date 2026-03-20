@@ -1,8 +1,8 @@
-# 🚀 Despliegue en Vercel
+# Despliegue en Vercel
 
 Guía completa para desplegar este proyecto de Payload CMS en Vercel.
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Requisitos Previos](#requisitos-previos)
 - [Configuración Rápida](#configuración-rápida)
@@ -14,19 +14,19 @@ Guía completa para desplegar este proyecto de Payload CMS en Vercel.
 
 ---
 
-## ✅ Requisitos Previos
+## Requisitos Previos
 
 Antes de desplegar en Vercel, asegúrate de tener:
 
-- ✅ Cuenta en [Vercel](https://vercel.com)
-- ✅ Cuenta en [Turso](https://turso.tech) (base de datos)
-- ✅ Cuenta en [Cloudflare](https://cloudflare.com) (R2 storage)
-- ✅ Repositorio de GitHub/GitLab/Bitbucket
-- ✅ Variables de entorno preparadas (ver abajo)
+- Cuenta en [Vercel](https://vercel.com)
+- Cuenta en [Turso](https://turso.tech) (base de datos)
+- Cuenta en [Cloudflare](https://cloudflare.com) (R2 storage)
+- Repositorio de GitHub/GitLab/Bitbucket
+- Variables de entorno preparadas (ver abajo)
 
 ---
 
-## ⚡ Configuración Rápida
+## Configuración Rápida
 
 ### 1. Conectar Repositorio
 
@@ -49,7 +49,7 @@ Install Command: pnpm install (detectado automáticamente)
 
 ### 3. Variables de Entorno
 
-**⚠️ IMPORTANTE:** Antes de hacer click en "Deploy", configura TODAS las variables de entorno.
+** IMPORTANTE:** Antes de hacer click en "Deploy", configura TODAS las variables de entorno.
 
 Click en **"Environment Variables"** y agrega:
 
@@ -96,7 +96,7 @@ Click en **"Deploy"** y espera 2-5 minutos.
 
 ---
 
-## 🔑 Variables de Entorno
+## Variables de Entorno
 
 ### Generar PAYLOAD_SECRET
 
@@ -150,7 +150,7 @@ turso db tokens create mi-proyecto-db
 - **Descripción:** Clave secreta para encriptar datos sensibles
 - **Formato:** String hexadecimal de 64 caracteres (32 bytes)
 - **Ejemplo:** `23e1ef930586ddfd3e95aa9a1071d03ad543f2d8c24703d320ee4c5d67dbe60b`
-- **⚠️ NUNCA compartir públicamente**
+- ** NUNCA compartir públicamente**
 
 #### `TURSO_DATABASE_URL` (OBLIGATORIO)
 
@@ -163,7 +163,7 @@ turso db tokens create mi-proyecto-db
 - **Descripción:** Token de autenticación para Turso
 - **Formato:** String largo (JWT)
 - **Ejemplo:** `eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9...`
-- **⚠️ Regenerar si expira**
+- ** Regenerar si expira**
 
 #### `R2_BUCKET_NAME` (OBLIGATORIO)
 
@@ -182,14 +182,14 @@ turso db tokens create mi-proyecto-db
 - **Descripción:** Secret Access Key de R2
 - **Formato:** String de 64 caracteres
 - **Ejemplo:** `q1w2e3r4t5y6u7i8o9p0a1s2d3f4g5h6j7k8l9z0x1c2v3b4n5m6`
-- **⚠️ NUNCA compartir públicamente**
+- ** NUNCA compartir públicamente**
 
 #### `R2_ENDPOINT` (OBLIGATORIO)
 
 - **Descripción:** Endpoint de tu cuenta de Cloudflare R2
 - **Formato:** `https://[account-id].r2.cloudflarestorage.com`
 - **Ejemplo:** `https://abc123def456.r2.cloudflarestorage.com`
-- **📍 Encuentra tu account-id en Cloudflare Dashboard → R2**
+- ** Encuentra tu account-id en Cloudflare Dashboard → R2**
 
 #### `NEXT_PUBLIC_SERVER_URL` (RECOMENDADO)
 
@@ -207,7 +207,7 @@ turso db tokens create mi-proyecto-db
 
 ---
 
-## 📦 Despliegue Paso a Paso
+## Despliegue Paso a Paso
 
 ### Opción 1: Desde Vercel Dashboard (Recomendado)
 
@@ -229,26 +229,23 @@ turso db tokens create mi-proyecto-db
    - Click en **"Environment Variables"**
    - Agrega cada variable (ver tabla arriba)
    - Asegúrate de marcar todos los entornos:
-     - ✅ Production
-     - ✅ Preview
-     - ✅ Development
+     - Production
+     - Preview
+     - Development
 
 4. **Deploy**
    - Click **"Deploy"**
    - Espera 2-5 minutos
-   - ✅ ¡Listo!
+   - ¡Listo!
 
 ### Opción 2: Desde CLI
 
 ```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Login
-vercel login
+# Ejecutar Vercel CLI con pnpm (sin instalación global)
+pnpm dlx vercel login
 
 # Deploy (primera vez)
-vercel
+pnpm dlx vercel
 
 # Seguir prompts:
 # - Set up and deploy? → Yes
@@ -282,7 +279,7 @@ Agrega este botón a tu README:
 
 ---
 
-## ⚙️ Configuración de Build
+## ⚙ Configuración de Build
 
 Vercel ya detecta automáticamente Next.js, pero puedes personalizar en `vercel.json`:
 

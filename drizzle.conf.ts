@@ -1,7 +1,6 @@
-import { defineConfig } from 'drizzle-kit';
 import dotenv from 'dotenv';
+import { defineConfig } from 'drizzle-kit';
 
-// Carga variables de entorno locales
 dotenv.config();
 
 export default defineConfig({

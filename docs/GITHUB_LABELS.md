@@ -1,8 +1,8 @@
-# 🏷️ Configuración de Labels de GitHub
+# Configuración de Labels de GitHub
 
 Guía para crear y configurar las labels necesarias para Dependabot y otras automatizaciones.
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Crear Labels Manualmente](#crear-labels-manualmente)
 - [Crear Labels con GitHub CLI](#crear-labels-con-github-cli)
@@ -11,7 +11,7 @@ Guía para crear y configurar las labels necesarias para Dependabot y otras auto
 
 ---
 
-## 🎨 Crear Labels Manualmente
+## Crear Labels Manualmente
 
 ### Paso 1: Ir a Settings
 
@@ -73,7 +73,7 @@ Color: #d93f0b (rojo)
 
 ---
 
-## 🖥️ Crear Labels con GitHub CLI
+## Crear Labels con GitHub CLI
 
 ### Prerequisito: Instalar GitHub CLI
 
@@ -125,12 +125,12 @@ gh label create "major-update" \
   --description "Major version update (breaking changes possible)" \
   --color "d93f0b"
 
-echo "✅ Labels created successfully!"
+echo " Labels created successfully!"
 ```
 
 ---
 
-## 🤖 Crear Labels con Script
+## Crear Labels con Script
 
 ### Script Bash
 
@@ -144,7 +144,7 @@ Crea un archivo `create-labels.sh`:
 
 set -e
 
-echo "🏷️  Creating GitHub labels..."
+echo "  Creating GitHub labels..."
 
 # Array de labels: "name|description|color"
 labels=(
@@ -164,11 +164,11 @@ for label_data in "${labels[@]}"; do
   gh label create "$name" \
     --description "$description" \
     --color "$color" \
-    --force 2>/dev/null || echo "  ⚠️  Label '$name' might already exist"
+    --force 2>/dev/null || echo "    Label '$name' might already exist"
 done
 
 echo ""
-echo "✅ All labels created successfully!"
+echo " All labels created successfully!"
 echo ""
 echo "To enable labels in dependabot.yml, uncomment the 'labels' sections."
 ```
@@ -188,7 +188,7 @@ Crea un archivo `create-labels.js`:
 #!/usr/bin/env node
 
 // Script para crear labels de GitHub usando Octokit
-// Requiere: npm install @octokit/rest dotenv
+// Requiere: pnpm add @octokit/rest dotenv
 
 import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
@@ -236,7 +236,7 @@ const labels = [
 ];
 
 async function createLabels() {
-  console.log('🏷️  Creating GitHub labels...\n');
+  console.log('  Creating GitHub labels...\n');
 
   for (const label of labels) {
     try {
@@ -247,17 +247,17 @@ async function createLabels() {
         description: label.description,
         color: label.color,
       });
-      console.log(`✅ Created: ${label.name}`);
+      console.log(` Created: ${label.name}`);
     } catch (error) {
       if (error.status === 422) {
-        console.log(`⚠️  Already exists: ${label.name}`);
+        console.log(`  Already exists: ${label.name}`);
       } else {
-        console.error(`❌ Error creating ${label.name}:`, error.message);
+        console.error(` Error creating ${label.name}:`, error.message);
       }
     }
   }
 
-  console.log('\n✅ All labels processed!');
+  console.log('\n All labels processed!');
 }
 
 createLabels();
@@ -267,7 +267,7 @@ createLabels();
 
 ```bash
 # Instalar dependencias
-npm install @octokit/rest dotenv
+pnpm add @octokit/rest dotenv
 
 # Crear .env con tu token
 echo "GITHUB_TOKEN=ghp_tu_token_aqui" > .env
@@ -278,7 +278,7 @@ node create-labels.js
 
 ---
 
-## 📝 Labels Recomendadas
+## Labels Recomendadas
 
 ### Labels Esenciales (Obligatorias)
 
@@ -307,7 +307,7 @@ node create-labels.js
 
 ---
 
-## ✅ Verificar Labels
+## Verificar Labels
 
 Después de crear las labels:
 
@@ -323,7 +323,7 @@ O visita: `https://github.com/tu-usuario/tu-repo/labels`
 
 ---
 
-## 🔧 Habilitar Labels en Dependabot
+## Habilitar Labels en Dependabot
 
 Una vez creadas las labels, edita `.github/dependabot.yml`:
 
@@ -336,7 +336,7 @@ labels:
 
 ---
 
-## 🎨 Colores Recomendados
+## Colores Recomendados
 
 Paleta de colores para consistencia:
 
@@ -365,7 +365,7 @@ Grises:
 
 ---
 
-## 🚫 Eliminar Labels
+## Eliminar Labels
 
 Si necesitas eliminar una label:
 
@@ -379,7 +379,7 @@ gh label delete "nombre-label" --yes
 
 ---
 
-## 💡 Mejores Prácticas
+## Mejores Prácticas
 
 1. **Nomenclatura:**
    - Usa minúsculas
@@ -404,7 +404,7 @@ gh label delete "nombre-label" --yes
 
 ---
 
-## 📚 Recursos
+## Recursos
 
 - [GitHub Labels Documentation](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels)
 - [GitHub CLI Labels](https://cli.github.com/manual/gh_label)

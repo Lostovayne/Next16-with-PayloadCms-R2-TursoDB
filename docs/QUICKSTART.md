@@ -1,23 +1,23 @@
-# ⚡ Guía Rápida de Inicio - 5 Minutos
+#  Guía Rápida de Inicio - 5 Minutos
 
 Esta guía te permitirá tener el proyecto funcionando en menos de 5 minutos.
 
-## 📋 Checklist Rápido
+##  Checklist Rápido
 
 - [ ] Node.js >= 20.9.0 instalado
 - [ ] pnpm instalado
 - [ ] Cuenta en Turso creada
 - [ ] Cuenta en Cloudflare creada
 
-## 🚀 Inicio Rápido
+##  Inicio Rápido
 
-### 1️⃣ Instalar dependencias (30 segundos)
+### 1⃣ Instalar dependencias (30 segundos)
 
 ```bash
 pnpm install
 ```
 
-### 2️⃣ Configurar Turso Database (2 minutos)
+### 2⃣ Configurar Turso Database (2 minutos)
 
 ```bash
 # Instalar Turso CLI
@@ -40,7 +40,7 @@ turso db tokens create mi-proyecto-db
 # Copiar output → TURSO_AUTH_TOKEN
 ```
 
-### 3️⃣ Configurar Cloudflare R2 (2 minutos)
+### 3⃣ Configurar Cloudflare R2 (2 minutos)
 
 1. Ve a [dash.cloudflare.com](https://dash.cloudflare.com)
 2. Click en **R2** → **Create bucket**
@@ -52,7 +52,7 @@ turso db tokens create mi-proyecto-db
 8. Copia Access Key ID → `R2_ACCESS_KEY_ID`
 9. Copia Secret Access Key → `R2_SECRET_ACCESS_KEY`
 
-### 4️⃣ Crear archivo .env (30 segundos)
+### 4⃣ Crear archivo .env (30 segundos)
 
 ```bash
 cp .env.example .env
@@ -78,7 +78,7 @@ R2_ENDPOINT=https://...r2.cloudflarestorage.com
 NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 ```
 
-### 5️⃣ Iniciar el proyecto (30 segundos)
+### 5⃣ Iniciar el proyecto (30 segundos)
 
 ```bash
 # Desarrollo
@@ -87,7 +87,7 @@ pnpm dev
 
 ¡Listo! Abre: `http://localhost:3000/admin`
 
-## 🎯 Primeros Pasos Después de Iniciar
+##  Primeros Pasos Después de Iniciar
 
 1. **Crear primer usuario administrador:**
    - Ve a `http://localhost:3000/admin`
@@ -104,7 +104,7 @@ pnpm dev
    - **Users**: Gestión de usuarios
    - **Media**: Archivos y medios
 
-## 📦 Comandos Más Usados
+##  Comandos Más Usados
 
 ```bash
 # Desarrollo
@@ -120,9 +120,9 @@ pnpm generate:types   # Generar tipos TypeScript
 pnpm payload migrate  # Ejecutar migraciones
 ```
 
-## 🔧 Problemas Comunes
+##  Problemas Comunes
 
-### ❌ Error: "PAYLOAD_SECRET is required"
+###  Error: "PAYLOAD_SECRET is required"
 
 ```bash
 # Generar un nuevo secreto
@@ -130,7 +130,7 @@ openssl rand -base64 32
 # Pégalo en .env como PAYLOAD_SECRET=...
 ```
 
-### ❌ Error: "Cannot connect to Turso"
+###  Error: "Cannot connect to Turso"
 
 ```bash
 # Verificar credenciales
@@ -139,12 +139,12 @@ turso db tokens create mi-proyecto-db
 # Actualiza .env con los nuevos valores
 ```
 
-### ❌ Error: "R2 bucket not found"
+###  Error: "R2 bucket not found"
 
 - Verifica que `R2_BUCKET_NAME` sea exacto (sin espacios)
 - Verifica que las credenciales tengan permisos
 
-### ❌ Error de build o caché
+###  Error de build o caché
 
 ```bash
 # Limpiar todo y reiniciar
@@ -153,7 +153,7 @@ pnpm install
 pnpm dev
 ```
 
-## 🌐 Desplegar en Vercel (Bonus - 2 minutos)
+##  Desplegar en Vercel (Bonus - 2 minutos)
 
 1. Sube tu código a GitHub
 2. Ve a [vercel.com](https://vercel.com) → **Import Project**
@@ -165,9 +165,9 @@ pnpm dev
    NEXT_PUBLIC_SERVER_URL=https://tu-proyecto.vercel.app
    ```
 5. Click **Deploy**
-6. ¡Listo! 🎉
+6. ¡Listo! 
 
-## 📚 Siguiente: Leer el README Completo
+##  Siguiente: Leer el README Completo
 
 Para información detallada, personalización y troubleshooting avanzado, lee [README.md](./README.md)
 
@@ -175,4 +175,7 @@ Para información detallada, personalización y troubleshooting avanzado, lee [R
 
 **¿Funcionó todo?** ⭐ Dale una estrella al repo
 
-**¿Tienes problemas?** 🐛 Abre un issue con los detalles
+**¿Tienes problemas?**  Abre un issue con los detalles
+
+
+

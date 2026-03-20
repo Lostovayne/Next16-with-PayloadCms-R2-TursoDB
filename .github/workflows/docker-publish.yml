@@ -1,24 +1,11 @@
-# ===================================
-# 🐳 Docker: Build & Push to GHCR
-# Construye imagen Docker y la publica
-# en GitHub Container Registry
-#
-# POLÍTICA DE PUBLICACIÓN:
-# - main: Publica imagen a GHCR (producción)
-# - PRs: Solo build para validar (NO publica)
-# - develop: NO ejecuta este workflow
-# ===================================
-
-name: 🐳 Docker Publish
+name: Docker Publish
 
 on:
-  # Trigger SOLO en push a main (producción) y tags
   push:
     branches:
       - main
     tags:
       - 'v*.*.*'
-    # Solo si cambian archivos relevantes para Docker
     paths:
       - 'src/**'
       - 'Dockerfile'
@@ -27,13 +14,9 @@ on:
       - 'next.config.mjs'
       - '.dockerignore'
       - '.github/workflows/docker-publish.yml'
-
-  # Trigger en PRs a main para testing (solo build, no publica)
   pull_request:
     branches:
       - main
-
-  # Permitir ejecución manual
   workflow_dispatch:
     inputs:
       push_image:
@@ -45,48 +28,33 @@ on:
           - 'true'
           - 'false'
 
-# Cancelar workflows anteriores si hay un nuevo push
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# Permisos necesarios para GHCR
 permissions:
   contents: read
   packages: write
   id-token: write
 
-# Variables de entorno globales
 env:
   REGISTRY: ghcr.io
-  # Nombre de imagen personalizado (sin caracteres problemáticos como ".-")
-  # El nombre del repo contiene ".-" que Docker no acepta
   IMAGE_NAME: ${{ github.repository_owner }}/payload-nextjs-turso-r2
 
 jobs:
-  # ===================================
-  # Job 1: Build y Push de la Imagen
-  # Solo publica desde main (producción)
-  # ===================================
   build-and-push:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
     steps:
-      # Checkout del código
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      # Setup Docker Buildx (necesario para cache y multi-platform)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           driver-opts: |
             image=moby/buildkit:latest
             network=host
-
-      # Login a GitHub Container Registry (solo para main)
       - name: Log in to GitHub Container Registry
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: docker/login-action@v3
@@ -94,58 +62,41 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      # Convertir nombre de imagen a minúsculas (Docker registry requirement)
       - name: Prepare image name
         id: image
         run: |
           echo "name=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-      # Extraer metadata (tags, labels)
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}
           tags: |
-            # Branch name (ej: main)
             type=ref,event=branch
-            # PR number (ej: pr-123)
             type=ref,event=pr
-            # Semantic version tags (solo para tags v*.*.*)
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            # SHA corto solo para main
             type=sha,prefix=main-,enable={{is_default_branch}}
-            # Latest solo para main
             type=raw,value=latest,enable={{is_default_branch}}
-
-      # Build de la imagen Docker
       - name: Build Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
-          # Platforms (puedes agregar más)
           platforms: linux/amd64
-          # Solo push si es main (producción)
           push: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && (github.event.inputs.push_image != 'false') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Cache layers para builds más rápidos
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          # Build args (puedes agregar más)
           build-args: |
             BUILDKIT_INLINE_CACHE=1
             NODE_ENV=production
-
-      # Test básico de la imagen (solo si se construyó)
       - name: Test Docker image
         if: github.event_name == 'pull_request'
         run: |
-          echo "🧪 Testing Docker image..."
+          echo "Testing Docker image"
           docker run --rm \
             -e PAYLOAD_SECRET=test-secret-for-docker-test-minimum-32-chars \
             -e TURSO_DATABASE_URL=file:./test.db \
@@ -158,37 +109,27 @@ jobs:
             --name test-container \
             -d \
             ${{ steps.meta.outputs.tags }}
-
-          # Esperar que el servidor inicie
-          echo "⏳ Waiting for server to start..."
+          echo "Waiting for server to start"
           sleep 10
-
-          # Verificar que el servidor responda
-          echo "✅ Checking if server is responding..."
+          echo "Checking if server is responding"
           docker logs test-container
-
-          # Limpiar
           docker stop test-container || true
-
-      # Summary para PRs (solo build, no publica)
       - name: Generate PR summary
         if: github.event_name == 'pull_request'
         run: |
-          echo "### 🐳 Docker Image Build Test" >> $GITHUB_STEP_SUMMARY
+          echo "### Docker Image Build Test" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Status:** ✅ Image built successfully" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** Image built successfully" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Branch:** \`${{ github.head_ref }}\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "⚠️ **Note:** Image was NOT pushed to registry (PR only builds for testing)" >> $GITHUB_STEP_SUMMARY
+          echo "**Note:** Image was not pushed to registry (PR only builds for testing)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "To publish this image, merge to \`main\` branch." >> $GITHUB_STEP_SUMMARY
-
-      # Generar summary (solo para publicaciones exitosas en main)
       - name: Generate summary
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          echo "### 🐳 Docker Image Published to Production" >> $GITHUB_STEP_SUMMARY
+          echo "### Docker Image Published to Production" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Branch:** \`main\` (Production)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -201,12 +142,12 @@ jobs:
           echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📦 Pull the image:" >> $GITHUB_STEP_SUMMARY
+          echo "### Pull the image:" >> $GITHUB_STEP_SUMMARY
           echo '```bash' >> $GITHUB_STEP_SUMMARY
           echo "docker pull ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:latest" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 🚀 Run the container:" >> $GITHUB_STEP_SUMMARY
+          echo "### Run the container:" >> $GITHUB_STEP_SUMMARY
           echo '```bash' >> $GITHUB_STEP_SUMMARY
           echo "docker run -d \\" >> $GITHUB_STEP_SUMMARY
           echo "  --name payload-app \\" >> $GITHUB_STEP_SUMMARY
@@ -221,22 +162,17 @@ jobs:
           echo "  ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:latest" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
-  # ===================================
-  # Job 2: Security Scan (solo producción)
-  # ===================================
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest
     needs: build-and-push
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     timeout-minutes: 10
-
     steps:
       - name: Prepare image name
         id: image
         run: |
           echo "name=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -244,16 +180,14 @@ jobs:
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
-
       - name: Upload Trivy results to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
         continue-on-error: true
-
       - name: Generate security summary
         run: |
-          echo "### 🔒 Security Scan Completed" >> $GITHUB_STEP_SUMMARY
+          echo "### Security Scan Completed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Image scanned for vulnerabilities" >> $GITHUB_STEP_SUMMARY
-          echo "📊 Check Security tab for detailed results" >> $GITHUB_STEP_SUMMARY
+          echo "Image scanned for vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          echo "Check Security tab for detailed results" >> $GITHUB_STEP_SUMMARY

@@ -1,5 +1,5 @@
 {
-  "name": "mi-proyecto-2025",
+  "name": "mi-proyecto-2026",
   "version": "1.0.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
@@ -21,62 +21,49 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.985.0",
+    "@aws-sdk/client-s3": "^3.1014.0",
     "@libsql/client": "^0.15.15",
-    "@payloadcms/db-sqlite": "3.69.0",
-    "@payloadcms/next": "3.69.0",
-    "@payloadcms/richtext-lexical": "3.69.0",
-    "@payloadcms/storage-s3": "3.69.0",
-    "@payloadcms/ui": "3.69.0",
+    "@payloadcms/db-sqlite": "3.80.0",
+    "@payloadcms/next": "3.80.0",
+    "@payloadcms/richtext-lexical": "3.80.0",
+    "@payloadcms/storage-s3": "3.80.0",
+    "@payloadcms/ui": "3.80.0",
     "cross-env": "^10.1.0",
     "dotenv": "17.2.3",
-    "drizzle-kit": "^0.31.8",
-    "graphql": "^16.12.0",
-    "next": "16.1.6",
-    "payload": "3.69.0",
+    "drizzle-kit": "^0.31.10",
+    "graphql": "^16.13.1",
+    "next": "~16.2.0",
+    "payload": "3.80.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sass": "^1.97.3",
     "sharp": "0.34.5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@eslint/js": "^9.39.2",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^9.39.4",
     "@playwright/test": "1.57.0",
     "@testing-library/react": "16.3.1",
-    "@types/node": "^25.2.2",
+    "@types/node": "^25.5.0",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.2",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
     "eslint-config-next": "16.1.1",
     "jsdom": "27.4.0",
     "playwright": "1.57.0",
     "playwright-core": "1.57.0",
     "prettier": "^3.8.1",
     "typescript": "5.9.3",
-    "typescript-eslint": "^8.54.0",
+    "typescript-eslint": "^8.57.1",
     "vite-tsconfig-paths": "6.0.3",
     "vitest": "4.0.16"
   },
-  "engines": {
-    "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9 || ^10"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "sharp",
-      "unrs-resolver"
-    ],
-    "overrides": {
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3"
-    }
-  },
-  "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom"
-  }
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
 }
