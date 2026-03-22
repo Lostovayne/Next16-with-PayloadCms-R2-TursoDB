@@ -322,6 +322,15 @@ export default buildConfig({
 
 ## Comandos Disponibles
 
+
+### Migracion de la BD local a la nube
+
+```bash
+# Migrando nuestra base de datos
+npx payload migrate:create
+npx payload migrate
+```
+
 ### Desarrollo
 
 ```bash
