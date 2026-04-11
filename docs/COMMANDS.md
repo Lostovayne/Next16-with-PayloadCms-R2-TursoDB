@@ -1,8 +1,8 @@
-#  Guía Completa de Comandos
+# Guía Completa de Comandos
 
 Documentación detallada de todos los comandos disponibles en el proyecto.
 
-##  Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Comandos de Desarrollo](#comandos-de-desarrollo)
 - [Comandos de Build y Producción](#comandos-de-build-y-producción)
@@ -15,7 +15,7 @@ Documentación detallada de todos los comandos disponibles en el proyecto.
 
 ---
 
-##  Comandos de Desarrollo
+## Comandos de Desarrollo
 
 ### `pnpm dev`
 
@@ -81,7 +81,7 @@ rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev
 
 ---
 
-##  Comandos de Build y Producción
+## Comandos de Build y Producción
 
 ### `pnpm build`
 
@@ -158,7 +158,7 @@ cross-env NODE_OPTIONS=--no-deprecation next start
 
 ---
 
-##  Comandos de Payload CMS
+## Comandos de Payload CMS
 
 ### `pnpm generate:types`
 
@@ -294,7 +294,7 @@ pnpm payload generate:importmap
 
 ---
 
-##  Comandos de Testing
+## Comandos de Testing
 
 ### `pnpm test`
 
@@ -390,7 +390,7 @@ npx playwright show-report
 
 ---
 
-##  Comandos de Base de Datos
+## Comandos de Base de Datos
 
 ### Drizzle Kit
 
@@ -413,7 +413,7 @@ Crea archivos SQL en `src/migrations/`.
 npx drizzle-kit push
 ```
 
- **Cuidado:** Aplica cambios sin crear migración. Solo en desarrollo.
+**Cuidado:** Aplica cambios sin crear migración. Solo en desarrollo.
 
 ```bash
 # Verificar esquema
@@ -446,7 +446,7 @@ turso db destroy mi-proyecto-db
 
 ---
 
-##  Comandos de Linting y Formato
+## Comandos de Linting y Formato
 
 ### `pnpm lint`
 
@@ -485,7 +485,7 @@ npx prettier --write src/collections/Posts.ts
 
 ---
 
-##  Comandos de Docker
+## Comandos de Docker
 
 ### Build
 
@@ -534,7 +534,7 @@ docker-compose down -v
 
 ---
 
-##  Variables de Entorno en Comandos
+## Variables de Entorno en Comandos
 
 ### NODE_OPTIONS
 
@@ -574,7 +574,7 @@ cross-env NODE_OPTIONS=--no-deprecation next dev
 
 ---
 
-##  Comandos Útiles Adicionales
+## Comandos Útiles Adicionales
 
 ### Instalación y Gestión
 
@@ -634,7 +634,7 @@ pnpm install
 
 ---
 
-##  Flujo de Trabajo Típico
+## Flujo de Trabajo Típico
 
 ### Desarrollo Diario
 
@@ -679,7 +679,7 @@ pnpm install
 
 ---
 
-##  Comandos de Diagnóstico
+## Comandos de Diagnóstico
 
 ```bash
 # Ver versión de Node.js
@@ -707,7 +707,7 @@ taskkill /PID [PID_NUMBER] /F
 
 ---
 
-##  Recursos
+## Recursos
 
 - [pnpm Docs](https://pnpm.io)
 - [Next.js CLI](https://nextjs.org/docs/api-reference/cli)
@@ -724,5 +724,3 @@ taskkill /PID [PID_NUMBER] /F
 4.  No hay otro proceso usando el puerto 3000
 
 **¡Feliz desarrollo! **
-
-
