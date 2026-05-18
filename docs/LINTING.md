@@ -1,8 +1,8 @@
-#  Guía de Linting y Formatting
+# Guía de Linting y Formatting
 
 Documentación completa de las reglas de ESLint y Prettier configuradas en el proyecto.
 
-##  Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Resumen](#resumen)
 - [Prettier - Formato de Código](#prettier---formato-de-código)
@@ -14,7 +14,7 @@ Documentación completa de las reglas de ESLint y Prettier configuradas en el pr
 
 ---
 
-##  Resumen
+## Resumen
 
 Este proyecto usa las **mejores prácticas actuales** de TypeScript/Next.js:
 
@@ -26,16 +26,16 @@ Este proyecto usa las **mejores prácticas actuales** de TypeScript/Next.js:
 
 ### Filosofía de las Reglas
 
- **Semicolons (`;`)** - SÍ se usan (estándar TypeScript)
- **Single quotes (`'`)** - Preferidas sobre double quotes
- **Trailing commas** - En objetos/arrays multilínea (ES5 style)
- **100 caracteres** - Límite de línea
- **2 espacios** - Indentación
- **LF** - Line endings Unix
+**Semicolons (`;`)** - SÍ se usan (estándar TypeScript)
+**Single quotes (`'`)** - Preferidas sobre double quotes
+**Trailing commas** - En objetos/arrays multilínea (ES5 style)
+**100 caracteres** - Límite de línea
+**2 espacios** - Indentación
+**LF** - Line endings Unix
 
 ---
 
-##  Prettier - Formato de Código
+## Prettier - Formato de Código
 
 ### Configuración (`.prettierrc.json`)
 
@@ -56,7 +56,7 @@ Este proyecto usa las **mejores prácticas actuales** de TypeScript/Next.js:
 
 ### Ejemplos de Formato
 
-####  Correcto (con semicolons)
+#### Correcto (con semicolons)
 
 ```typescript
 import { useState } from 'react';
@@ -80,7 +80,7 @@ const MyComponent: NextPage = () => {
 export default MyComponent;
 ```
 
-####  Incorrecto (sin semicolons)
+#### Incorrecto (sin semicolons)
 
 ```typescript
 import { useState } from 'react'  //  Falta semicolon
@@ -148,11 +148,11 @@ media/
 uploads/
 ```
 
- **CRÍTICO:** Nunca formatees `pnpm-lock.yaml`, `package-lock.json` o `yarn.lock` ya que puede causar errores en la instalación de dependencias.
+**CRÍTICO:** Nunca formatees `pnpm-lock.yaml`, `package-lock.json` o `yarn.lock` ya que puede causar errores en la instalación de dependencias.
 
 ---
 
-##  ESLint - Calidad de Código
+## ESLint - Calidad de Código
 
 ### Configuración Principal
 
@@ -342,7 +342,7 @@ const square = (x) => x * x; // Error: Missing parens
 
 ---
 
-##  Comandos Disponibles
+## Comandos Disponibles
 
 ### Linting
 
@@ -379,7 +379,7 @@ pnpm exec prettier --write $(git diff --cached --name-only --diff-filter=ACMR | 
 pnpm exec prettier --list-different .
 ```
 
- **Nota:** `pnpm format` automáticamente ignora archivos en `.prettierignore`
+**Nota:** `pnpm format` automáticamente ignora archivos en `.prettierignore`
 
 ### Workflow Típico
 
@@ -410,15 +410,15 @@ chmod +x scripts/verify-format.sh
 
 Este script verifica:
 
--  Formato con Prettier
--  Linting con ESLint
--  Tipos con TypeScript
--  Semicolons presentes
--  Archivos críticos no modificados
+- Formato con Prettier
+- Linting con ESLint
+- Tipos con TypeScript
+- Semicolons presentes
+- Archivos críticos no modificados
 
 ---
 
-##  Integración con IDE
+## Integración con IDE
 
 ### VS Code
 
@@ -461,8 +461,8 @@ Este script verifica:
 ### WebStorm / IntelliJ
 
 1. Settings → Languages & Frameworks → JavaScript → Prettier
-2.  On save
-3.  On code reformat
+2. On save
+3. On code reformat
 4. Prettier package: `{project}/node_modules/prettier`
 
 ### Neovim / Vim
@@ -483,20 +483,20 @@ vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
 
 ---
 
-##  Reglas Importantes
+## Reglas Importantes
 
-### DO 
+### DO
 
 1. **Usa semicolons siempre**
 
    ```typescript
-   const foo = 'bar'; // 
+   const foo = 'bar'; //
    ```
 
 2. **Usa single quotes**
 
    ```typescript
-   const message = 'Hello'; // 
+   const message = 'Hello'; //
    ```
 
 3. **Usa trailing commas en multilínea**
@@ -504,68 +504,68 @@ vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
    ```typescript
    const obj = {
      foo: 'bar',
-     baz: 'qux', // 
+     baz: 'qux', //
    };
    ```
 
 4. **Usa const por defecto**
 
    ```typescript
-   const config = { ... };  // 
+   const config = { ... };  //
    ```
 
 5. **Siempre usa arrow parens**
 
    ```typescript
-   const fn = (x) => x * 2; // 
+   const fn = (x) => x * 2; //
    ```
 
 6. **Tipado explícito cuando es necesario**
    ```typescript
-   const sum = (a: number, b: number): number => a + b; // 
+   const sum = (a: number, b: number): number => a + b; //
    ```
 
-### DON'T 
+### DON'T
 
 1. **No omitas semicolons**
 
    ```typescript
-   const foo = 'bar'; // 
+   const foo = 'bar'; //
    ```
 
 2. **No uses double quotes sin razón**
 
    ```typescript
-   const message = 'Hello'; // 
+   const message = 'Hello'; //
    ```
 
 3. **No uses any sin justificación**
 
    ```typescript
-   const data: any = fetchData(); // 
+   const data: any = fetchData(); //
    ```
 
 4. **No uses var**
 
    ```typescript
-   var count = 0; // 
+   var count = 0; //
    ```
 
 5. **No dejes console.log en producción**
 
    ```typescript
-   console.log('Debug:', data); // 
+   console.log('Debug:', data); //
    ```
 
 6. **No ignores errores de TypeScript**
    ```typescript
    // @ts-ignore
-   const result = unsafeFunction(); // 
+   const result = unsafeFunction(); //
    ```
 
 ---
 
-##  Solución de Problemas
+## Solución de Problemas
 
 ### Prettier no formatea al guardar
 
@@ -632,7 +632,7 @@ pnpm lint
 
 ---
 
-##  Pre-commit Hooks (Opcional)
+## Pre-commit Hooks (Opcional)
 
 ### Con Husky + lint-staged
 
@@ -666,7 +666,7 @@ pnpm exec lint-staged
 
 ---
 
-##  Recursos
+## Recursos
 
 - [ESLint Rules](https://eslint.org/docs/latest/rules/)
 - [TypeScript ESLint](https://typescript-eslint.io/rules/)
@@ -675,31 +675,28 @@ pnpm exec lint-staged
 
 ---
 
-##  Checklist
+## Checklist
 
 Antes de hacer commit:
 
-- [ ]  Código formateado con Prettier (`pnpm format`)
-- [ ]  Sin errores de ESLint (`pnpm lint`)
-- [ ]  Build exitoso (`pnpm build`)
-- [ ]  Tests pasando (`pnpm test`)
-- [ ]  Sin console.log innecesarios
-- [ ]  Todos los semicolons presentes
-- [ ]  Imports ordenados correctamente
-- [ ]  **pnpm-lock.yaml NO fue modificado manualmente**
-- [ ]  payload-types.ts está actualizado (`pnpm generate:types`)
+- [ ] Código formateado con Prettier (`pnpm format`)
+- [ ] Sin errores de ESLint (`pnpm lint`)
+- [ ] Build exitoso (`pnpm build`)
+- [ ] Tests pasando (`pnpm test`)
+- [ ] Sin console.log innecesarios
+- [ ] Todos los semicolons presentes
+- [ ] Imports ordenados correctamente
+- [ ] **pnpm-lock.yaml NO fue modificado manualmente**
+- [ ] payload-types.ts está actualizado (`pnpm generate:types`)
 
 ### Archivos que NUNCA deben editarse manualmente:
 
--  `pnpm-lock.yaml` / `package-lock.json` / `yarn.lock`
--  `src/payload-types.ts` (generado con `pnpm generate:types`)
--  `src/migrations/*.sql` (generado con `pnpm payload migrate:create`)
--  `next-env.d.ts` (generado por Next.js)
--  `.next/` (build output)
+- `pnpm-lock.yaml` / `package-lock.json` / `yarn.lock`
+- `src/payload-types.ts` (generado con `pnpm generate:types`)
+- `src/migrations/*.sql` (generado con `pnpm payload migrate:create`)
+- `next-env.d.ts` (generado por Next.js)
+- `.next/` (build output)
 
 ---
 
 **¿Dudas sobre las reglas?** Consulta este documento o revisa los archivos `.eslintrc.json` y `.prettierrc.json`.
-
-
-
