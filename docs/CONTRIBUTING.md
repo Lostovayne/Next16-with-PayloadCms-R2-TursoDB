@@ -1,8 +1,8 @@
-#  Guía de Contribución
+# Guía de Contribución
 
 ¡Gracias por tu interés en contribuir a este proyecto! Este documento te guiará a través del proceso de contribución.
 
-##  Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Código de Conducta](#código-de-conducta)
 - [Cómo Contribuir](#cómo-contribuir)
@@ -12,7 +12,7 @@
 - [Reportar Bugs](#reportar-bugs)
 - [Sugerir Mejoras](#sugerir-mejoras)
 
-##  Código de Conducta
+## Código de Conducta
 
 Este proyecto se adhiere a un código de conducta. Al participar, se espera que mantengas este código. Por favor reporta comportamientos inaceptables.
 
@@ -23,7 +23,7 @@ Este proyecto se adhiere a un código de conducta. Al participar, se espera que 
 - **Colaboración:** Trabaja en equipo y ayuda a otros
 - **Profesionalismo:** Mantén un ambiente profesional y constructivo
 
-##  Cómo Contribuir
+## Cómo Contribuir
 
 ### 1. Fork el Repositorio
 
@@ -93,7 +93,7 @@ git push origin tipo/descripcion-corta
 3. Espera la revisión
 4. Realiza cambios si son solicitados
 
-##  Proceso de Development
+## Proceso de Development
 
 ### Configuración Inicial
 
@@ -152,14 +152,14 @@ git push origin feature/nueva-funcionalidad
 # 9. Crear PR en GitHub
 ```
 
-##  Estándares de Código
+## Estándares de Código
 
 ### TypeScript
 
--  Usa TypeScript para todo el código
--  Define tipos explícitos
--  Evita `any`, usa `unknown` si es necesario
--  Usa interfaces para objetos complejos
+- Usa TypeScript para todo el código
+- Define tipos explícitos
+- Evita `any`, usa `unknown` si es necesario
+- Usa interfaces para objetos complejos
 
 ```typescript
 //  Evitar
@@ -214,7 +214,7 @@ export const Posts: CollectionConfig = {
 };
 ```
 
-##  Commits y Pull Requests
+## Commits y Pull Requests
 
 ### Formato de Commits
 
@@ -297,7 +297,7 @@ Agrega una nueva colección de comentarios con soporte para:
 Los comentarios se almacenan en Turso y las imágenes en R2.
 ```
 
-##  Reportar Bugs
+## Reportar Bugs
 
 ### Antes de Reportar
 
@@ -347,7 +347,7 @@ Pega aquí los logs de error
 
 ```
 
-##  Sugerir Mejoras
+## Sugerir Mejoras
 
 ### Template de Feature Request
 
@@ -371,7 +371,7 @@ Cualquier otro contexto, screenshots, o ejemplos.
 - [ ] Solo sugiero la idea
 ```
 
-##  Testing
+## Testing
 
 ### Agregar Tests
 
@@ -423,27 +423,27 @@ pnpm test:e2e
 npx vitest
 ```
 
-##  Documentación
+## Documentación
 
 ### Actualizar Documentación
 
 Si tu PR agrega/modifica funcionalidad, actualiza:
 
--  `README.md` - Para cambios importantes
--  `DEVELOPMENT.md` - Para features de desarrollo
--  `COMMANDS.md` - Para nuevos comandos
--  Comentarios en el código
--  `.env.example` - Para nuevas variables
+- `README.md` - Para cambios importantes
+- `DEVELOPMENT.md` - Para features de desarrollo
+- `COMMANDS.md` - Para nuevos comandos
+- Comentarios en el código
+- `.env.example` - Para nuevas variables
 
 ### Estilo de Documentación
 
 - Usa markdown correcto
 - Incluye ejemplos de código
 - Agrega screenshots cuando sea útil
-- Usa emojis para mejor lectura 
+- Usa emojis para mejor lectura
 - Mantén la consistencia con docs existentes
 
-##  Checklist Final
+## Checklist Final
 
 Antes de crear tu PR, verifica:
 
@@ -457,20 +457,20 @@ Antes de crear tu PR, verifica:
 - [ ] Has probado localmente
 - [ ] El PR tiene una descripción clara
 
-##  Recursos para Contribuidores
+## Recursos para Contribuidores
 
 - [Payload CMS Docs](https://payloadcms.com/docs)
 - [Next.js Docs](https://nextjs.org/docs)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 
-##  Comunicación
+## Comunicación
 
 - **Issues:** Para bugs y feature requests
 - **Discussions:** Para preguntas y discusiones
 - **PRs:** Para contribuciones de código
 
-##  Reconocimientos
+## Reconocimientos
 
 Todos los contribuidores serán reconocidos en el proyecto. ¡Gracias por tu contribución!
 
@@ -489,6 +489,3 @@ Todos los contribuidores serán reconocidos en el proyecto. ¡Gracias por tu con
 **¡Gracias por contribuir! **
 
 Tu tiempo y esfuerzo ayudan a hacer este proyecto mejor para todos.
-
-
-

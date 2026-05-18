@@ -1,8 +1,8 @@
-#  Arquitectura del Proyecto
+# Arquitectura del Proyecto
 
 Documentación técnica de la arquitectura de **Payload CMS 3.0 + Next.js 15 + Turso + Cloudflare R2**.
 
-##  Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Vista General](#vista-general)
 - [Diagrama de Arquitectura](#diagrama-de-arquitectura)
@@ -13,7 +13,7 @@ Documentación técnica de la arquitectura de **Payload CMS 3.0 + Next.js 15 + T
 
 ---
 
-##  Vista General
+## Vista General
 
 Este proyecto implementa una arquitectura **headless CMS** moderna con las siguientes características:
 
@@ -26,7 +26,7 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 
 ---
 
-##  Diagrama de Arquitectura
+## Diagrama de Arquitectura
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -94,7 +94,7 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 
 ---
 
-##  Flujo de Datos
+## Flujo de Datos
 
 ### 1⃣ Flujo de Creación de Contenido
 
@@ -240,7 +240,7 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 
 ---
 
-##  Componentes Principales
+## Componentes Principales
 
 ### 1. Next.js 15 (App Router)
 
@@ -326,7 +326,7 @@ Este proyecto implementa una arquitectura **headless CMS** moderna con las sigui
 
 ---
 
-##  Stack Tecnológico
+## Stack Tecnológico
 
 ### Backend
 
@@ -390,7 +390,7 @@ Vercel (recomendado)
 
 ---
 
-##  Decisiones de Arquitectura
+## Decisiones de Arquitectura
 
 ### ¿Por qué Monolito en lugar de Microservicios?
 
@@ -398,12 +398,12 @@ Vercel (recomendado)
 
 **Razones:**
 
--  Menor complejidad operacional
--  Deploy más simple
--  Menos overhead de red
--  Ideal para equipos pequeños/medianos
--  Fácil de escalar verticalmente
--  Desarrollo más rápido
+- Menor complejidad operacional
+- Deploy más simple
+- Menos overhead de red
+- Ideal para equipos pequeños/medianos
+- Fácil de escalar verticalmente
+- Desarrollo más rápido
 
 **Cuándo cambiar:** Si necesitas escalar horizontalmente equipos grandes o dominios muy diferentes.
 
@@ -415,18 +415,18 @@ Vercel (recomendado)
 
 **Razones:**
 
--  Edge-ready (réplicas globales)
--  Latencia ultra-baja (<10ms)
--  Plan gratuito generoso
--  Zero-ops (serverless)
--  Compatible con SQLite (familiar)
--  Branch databases (dev/staging/prod)
+- Edge-ready (réplicas globales)
+- Latencia ultra-baja (<10ms)
+- Plan gratuito generoso
+- Zero-ops (serverless)
+- Compatible con SQLite (familiar)
+- Branch databases (dev/staging/prod)
 
 **Limitaciones:**
 
--  No recomendado para >1000 writes/seg
--  Menos maduro que PostgreSQL
--  Algunas features SQL avanzadas limitadas
+- No recomendado para >1000 writes/seg
+- Menos maduro que PostgreSQL
+- Algunas features SQL avanzadas limitadas
 
 ---
 
@@ -436,18 +436,18 @@ Vercel (recomendado)
 
 **Razones:**
 
--  **Zero egress fees** (S3 cobra por descarga)
--  Compatible con S3 API (drop-in replacement)
--  CDN integrado de Cloudflare
--  10GB gratis al mes
--  Menor costo total
+- **Zero egress fees** (S3 cobra por descarga)
+- Compatible con S3 API (drop-in replacement)
+- CDN integrado de Cloudflare
+- 10GB gratis al mes
+- Menor costo total
 
 **Comparación de costos:**
 
 | Servicio | Storage | Egress    | Total (100GB storage + 1TB egress) |
 | -------- | ------- | --------- | ---------------------------------- |
 | AWS S3   | ~$2.30  | ~$90      | ~$92.30/mes                        |
-| R2       | ~$1.50  | **$0.00** | **~$1.50/mes**                   |
+| R2       | ~$1.50  | **$0.00** | **~$1.50/mes**                     |
 
 ---
 
@@ -457,14 +457,14 @@ Vercel (recomendado)
 
 **Razones:**
 
--  **Code-first** (configuración en TypeScript)
--  **Type-safe** completo
--  **Self-hosted** (control total)
--  **Integrado con Next.js** (mismo proyecto)
--  **Lexical editor** moderno
--  **GraphQL + REST** automáticos
--  **Open source** (MIT license)
--  **Hooks potentes** para lógica custom
+- **Code-first** (configuración en TypeScript)
+- **Type-safe** completo
+- **Self-hosted** (control total)
+- **Integrado con Next.js** (mismo proyecto)
+- **Lexical editor** moderno
+- **GraphQL + REST** automáticos
+- **Open source** (MIT license)
+- **Hooks potentes** para lógica custom
 
 **vs Strapi:**
 
@@ -478,7 +478,7 @@ Vercel (recomendado)
 
 ---
 
-##  Seguridad
+## Seguridad
 
 ### Autenticación
 
@@ -521,13 +521,13 @@ fields: [
 
 ### Variables de Entorno
 
--  Nunca commiteadas (`.gitignore`)
--  Encriptación en tránsito (HTTPS)
--  Secrets en plataforma de deploy (Vercel)
+- Nunca commiteadas (`.gitignore`)
+- Encriptación en tránsito (HTTPS)
+- Secrets en plataforma de deploy (Vercel)
 
 ---
 
-##  Escalabilidad
+## Escalabilidad
 
 ### Capacidades Actuales
 
@@ -557,7 +557,7 @@ fields: [
 
 ---
 
-##  Ciclo de Vida de Request
+## Ciclo de Vida de Request
 
 ### Request de Página (SSR)
 
@@ -587,7 +587,7 @@ fields: [
 
 ---
 
-##  Convenciones de Código
+## Convenciones de Código
 
 ### Naming Conventions
 
@@ -628,7 +628,7 @@ export const CollectionName: CollectionConfig = {
 
 ---
 
-##  Performance
+## Performance
 
 ### Optimizaciones Aplicadas
 
@@ -653,7 +653,7 @@ export const CollectionName: CollectionConfig = {
 
 ---
 
-##  Testing Strategy
+## Testing Strategy
 
 ```
 ┌─────────────────────────────────────┐
@@ -679,7 +679,7 @@ export const CollectionName: CollectionConfig = {
 
 ---
 
-##  Deploy Pipeline
+## Deploy Pipeline
 
 ```
 1. Git Push (GitHub)
@@ -707,7 +707,7 @@ export const CollectionName: CollectionConfig = {
 
 ---
 
-##  Referencias
+## Referencias
 
 - [Payload CMS Architecture](https://payloadcms.com/docs/getting-started/what-is-payload)
 - [Next.js App Router](https://nextjs.org/docs/app)
@@ -717,6 +717,3 @@ export const CollectionName: CollectionConfig = {
 ---
 
 **¿Tienes dudas sobre la arquitectura?** Abre un issue o discussion en el repositorio.
-
-
-

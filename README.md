@@ -322,7 +322,6 @@ export default buildConfig({
 
 ## Comandos Disponibles
 
-
 ### Migracion de la BD local a la nube
 
 ```bash
