@@ -1,0 +1,11 @@
+# Code Owners
+
+All maintainers have equal ownership of the entire repository.
+
+## Maintainers
+
+*   @Lostovayne — Project owner and maintainer. Has authority over all decisions.
+
+## Auto-assignment
+
+GitHub will automatically request review from the code owners when a PR is opened.
