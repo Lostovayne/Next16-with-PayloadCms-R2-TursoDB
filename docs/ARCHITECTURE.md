@@ -610,18 +610,10 @@ user - profile.tsx;
 ```typescript
 export const CollectionName: CollectionConfig = {
   slug: 'collection-name',
-  admin: {
-    /* ... */
-  },
-  access: {
-    /* ... */
-  },
-  hooks: {
-    /* ... */
-  },
-  fields: [
-    /* ... */
-  ],
+  admin: {/* ... */},
+  access: {/* ... */},
+  hooks: {/* ... */},
+  fields: [/* ... */],
   timestamps: true,
 };
 ```

@@ -457,7 +457,7 @@ on:
 # Manual + automático
 on:
   push:
-  workflow_dispatch:  # Permite ejecución manual
+  workflow_dispatch: # Permite ejecución manual
 ```
 
 ### Limitar a Rutas Específicas

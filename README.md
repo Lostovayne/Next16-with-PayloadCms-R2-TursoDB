@@ -30,15 +30,15 @@ Open `http://localhost:3000/admin` to access the admin panel.
 
 ### Environment Variables
 
-| Variable | Description | How to get |
-|---|---|---|
-| `PAYLOAD_SECRET` | Encryption key (min 32 chars) | `openssl rand -base64 32` |
-| `TURSO_DATABASE_URL` | Turso database URL | `turso db show <db> --url` |
-| `TURSO_AUTH_TOKEN` | Turso auth token | `turso db tokens create <db>` |
-| `R2_BUCKET_NAME` | Cloudflare R2 bucket name | Cloudflare Dashboard > R2 |
-| `R2_ACCESS_KEY_ID` | R2 API access key | Cloudflare Dashboard > R2 > Manage R2 API Tokens |
-| `R2_SECRET_ACCESS_KEY` | R2 API secret key | Same as above (shown once) |
-| `R2_ENDPOINT` | R2 endpoint URL | `https://<account-id>.r2.cloudflarestorage.com` |
+| Variable               | Description                   | How to get                                       |
+| ---------------------- | ----------------------------- | ------------------------------------------------ |
+| `PAYLOAD_SECRET`       | Encryption key (min 32 chars) | `openssl rand -base64 32`                        |
+| `TURSO_DATABASE_URL`   | Turso database URL            | `turso db show <db> --url`                       |
+| `TURSO_AUTH_TOKEN`     | Turso auth token              | `turso db tokens create <db>`                    |
+| `R2_BUCKET_NAME`       | Cloudflare R2 bucket name     | Cloudflare Dashboard > R2                        |
+| `R2_ACCESS_KEY_ID`     | R2 API access key             | Cloudflare Dashboard > R2 > Manage R2 API Tokens |
+| `R2_SECRET_ACCESS_KEY` | R2 API secret key             | Same as above (shown once)                       |
+| `R2_ENDPOINT`          | R2 endpoint URL               | `https://<account-id>.r2.cloudflarestorage.com`  |
 
 See [docs/QUICKSTART.md](./docs/QUICKSTART.md) for detailed setup instructions.
 
@@ -58,17 +58,17 @@ See [docs/QUICKSTART.md](./docs/QUICKSTART.md) for detailed setup instructions.
 
 ## Tech Stack
 
-| Technology | Version | Purpose |
-|---|---|---|
-| Payload CMS | 3.80.0 | Headless CMS |
-| Next.js | 16.2 | React framework |
-| React | 19.2.3 | UI library |
-| TypeScript | 5.9.3 | Type safety |
-| Turso / libSQL | 0.15.15 | Edge database |
-| Cloudflare R2 | — | File storage |
-| Drizzle Kit | 0.31.10 | Database migrations |
-| Vitest | 4.0.16 | Integration tests |
-| Playwright | 1.57.0 | E2E tests |
+| Technology     | Version | Purpose             |
+| -------------- | ------- | ------------------- |
+| Payload CMS    | 3.80.0  | Headless CMS        |
+| Next.js        | 16.2    | React framework     |
+| React          | 19.2.3  | UI library          |
+| TypeScript     | 5.9.3   | Type safety         |
+| Turso / libSQL | 0.15.15 | Edge database       |
+| Cloudflare R2  | —       | File storage        |
+| Drizzle Kit    | 0.31.10 | Database migrations |
+| Vitest         | 4.0.16  | Integration tests   |
+| Playwright     | 1.57.0  | E2E tests           |
 
 ## Project Structure
 
@@ -136,6 +136,7 @@ docker run -p 3000:3000 --env-file .env payload-cms
 ### Other Platforms
 
 Railway, Render, Fly.io — connect your repo, set environment variables, use:
+
 - Build: `pnpm run build`
 - Start: `pnpm start`
 
@@ -143,15 +144,15 @@ See [docs/DOCKER.md](./docs/DOCKER.md) and [docs/VERCEL.md](./docs/VERCEL.md) fo
 
 ## Documentation
 
-| Guide | Description |
-|---|---|
-| [QUICKSTART.md](./docs/QUICKSTART.md) | Get running in 5 minutes |
-| [DEVELOPMENT.md](./docs/DEVELOPMENT.md) | Create collections, fields, customize |
-| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Technical architecture and diagrams |
-| [COMMANDS.md](./docs/COMMANDS.md) | Complete command reference |
-| [DOCKER.md](./docs/DOCKER.md) | Docker and deployment |
-| [CI_CD.md](./docs/CI_CD.md) | GitHub Actions and automation |
-| [CONTRIBUTING.md](./docs/CONTRIBUTING.md) | How to contribute |
+| Guide                                     | Description                           |
+| ----------------------------------------- | ------------------------------------- |
+| [QUICKSTART.md](./docs/QUICKSTART.md)     | Get running in 5 minutes              |
+| [DEVELOPMENT.md](./docs/DEVELOPMENT.md)   | Create collections, fields, customize |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Technical architecture and diagrams   |
+| [COMMANDS.md](./docs/COMMANDS.md)         | Complete command reference            |
+| [DOCKER.md](./docs/DOCKER.md)             | Docker and deployment                 |
+| [CI_CD.md](./docs/CI_CD.md)               | GitHub Actions and automation         |
+| [CONTRIBUTING.md](./docs/CONTRIBUTING.md) | How to contribute                     |
 
 ## Contributing
 

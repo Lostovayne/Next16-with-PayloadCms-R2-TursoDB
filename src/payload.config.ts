@@ -22,9 +22,11 @@ export default buildConfig({
   },
   collections: [Users, Media],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || (() => {
-    throw new Error('PAYLOAD_SECRET environment variable is required');
-  })(),
+  secret:
+    process.env.PAYLOAD_SECRET ||
+    (() => {
+      throw new Error('PAYLOAD_SECRET environment variable is required');
+    })(),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

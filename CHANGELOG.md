@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - LICENSE file (MIT)
 - SECURITY.md with vulnerability reporting policy
 - .nvmrc for Node.js 20 version pinning
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI status badge in README
 
 ### Changed
+
 - README rewritten from 771 to 171 lines for clarity and professionalism
 - README version badges corrected to match package.json (Payload 3.80.0)
 - Docker image tag corrected from `mi-proyecto` to `payload-cms`
@@ -29,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed redundant `turso-client.ts` (Payload handles Turso connection internally)
 
 ### Fixed
+
 - PAYLOAD_SECRET fallback from empty string to throw error if missing
 - docker-compose.yml volume device path changed from `${PWD}` to `./media` for cross-platform compatibility
 
