@@ -129,14 +129,14 @@ svg {
 
     .admin {
       color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
+      background: rgb(255, 255, 255);
       border: 1px solid rgb(0, 0, 0);
     }
 
     .docs {
-      color: rgb(1000, 1000, 1000);
+      color: rgb(255, 255, 255);
       background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
+      border: 1px solid rgb(255, 255, 255);
     }
   }
 
