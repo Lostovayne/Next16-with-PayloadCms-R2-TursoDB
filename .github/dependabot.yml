@@ -1,0 +1,57 @@
+version: 2
+
+updates:
+  - package-ecosystem: "pnpm"
+    directory: "/"
+    schedule:
+      - interval: "weekly"
+        day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      payload:
+        patterns:
+          - "payload"
+          - "@payloadcms/**"
+        update-types:
+          - "minor"
+          - "patch"
+      nextjs:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+          - "react-hook"
+      testing:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "@playwright/**"
+          - "playwright"
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/**"
+    allow:
+      - "minor"
+      - "patch"
+    ignore:
+      - "next" # Next.js major versions can break Payload
+    reviewers:
+      - "Lostovayne"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      - interval: "weekly"
+        day: "monday"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "Lostovayne"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      - interval: "weekly"
+        day: "friday"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Lostovayne"
