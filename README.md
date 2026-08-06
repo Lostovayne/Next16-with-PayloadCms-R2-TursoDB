@@ -2,6 +2,7 @@
 
 [![Payload CMS](https://img.shields.io/badge/Payload%20CMS-3.80.0-00D1B2?style=for-the-badge&logo=payload&logoColor=white)](https://payloadcms.com)
 [![CI](https://github.com/Lostovayne/Payload-CMS-3-Nextjs16-Turso-Cloudflare-R2/actions/workflows/ci.yml/badge.svg)](https://github.com/Lostovayne/Payload-CMS-3-Nextjs16-Turso-Cloudflare-R2/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Lostovayne/Payload-CMS-3-Nextjs16-Turso-Cloudflare-R2?style=for-the-badge&logo=semver)](https://github.com/Lostovayne/Payload-CMS-3-Nextjs16-Turso-Cloudflare-R2/releases)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Turso](https://img.shields.io/badge/Turso-SQLite-4EE6C1?style=for-the-badge&logo=sqlite&logoColor=white)](https://turso.tech)
