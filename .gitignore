@@ -38,15 +38,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# environment
 .env
 
+# media uploads
 /media
 
 # Playwright
-node_modules/
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-
-.vercel
