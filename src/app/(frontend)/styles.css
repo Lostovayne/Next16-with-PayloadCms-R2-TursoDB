@@ -162,3 +162,38 @@ svg {
     }
   }
 }
+
+/* ---------------------------------------------------------------- */
+/* Blocks — styles for src/blocks. Remove this section together with */
+/* the src/blocks directory to drop the block example entirely.      */
+/* ---------------------------------------------------------------- */
+
+.hero-basic {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.hero-basic__subheading {
+  opacity: 0.75;
+}
+
+.hero-basic__image {
+  margin: 32px 0;
+  border-radius: 8px;
+}
+
+.hero-basic__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.hero-basic__links a {
+  padding: 8px 20px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+}
